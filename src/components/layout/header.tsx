@@ -3,18 +3,16 @@
 import { Moon, Sun } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Button } from '@/components/ui/button'
+import { RootState } from '@/store/store'
+import { toggleTheme } from '@/store/ui/themeSlice'
 
-export function Header({
-  isDark,
-  setIsDark
-}: {
-  isDark: boolean
-  // eslint-disable-next-line no-unused-vars
-  setIsDark: (isDark: boolean) => void
-}) {
+export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const isDark = useSelector((state: RootState) => state.theme.isDark)
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -47,7 +45,7 @@ export function Header({
             {/* Logo */}
             <div className='flex-1 flex items-center justify-center md:justify-start'>
               <Link href='/' className='text-xl font-bold'>
-                DANANGDENTIST
+                DANANG DENTISTS
               </Link>
             </div>
 
@@ -81,7 +79,7 @@ export function Header({
               <Button
                 variant='ghost'
                 size='icon'
-                onClick={() => setIsDark(!isDark)}
+                onClick={() => dispatch(toggleTheme())}
                 className='ml-2'
               >
                 {isDark ? <Sun className='h-5 w-5' /> : <Moon className='h-5 w-5' />}
@@ -108,7 +106,8 @@ export function Header({
               </Button>
             </Link>
             <div className='py-1 ml-3 text-xs'>
-              Prefer to talk? Call us to order <span className='font-semibold'>855-981-8568</span>
+              Prefer to talk? Call us to order{' '}
+              <span className='font-semibold underline'>84-818-548-409</span>
             </div>
             <Link href='/' className='block' onClick={() => setIsMenuOpen(false)}>
               <Button variant='ghost' className='w-full justify-start font-semibold'>
@@ -134,8 +133,9 @@ export function Header({
         </div>
       </nav>
       <div className='hidden md:block relative'>
-        <div className='bg-gray-900 text-white py-2 px-4 absolute right-8 top-[64px] z-10'>
-          Prefer to talk? Call us to order <span className='font-semibold'>855-981-8568</span>
+        <div className='bg-foreground text-background py-2 px-4 absolute right-8 z-10'>
+          Prefer to talk? Call us to order{' '}
+          <span className='font-semibold underline'>84-818-548-409</span>
         </div>
       </div>
     </>

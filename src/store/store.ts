@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import { booksApi } from '@/api/books-api'
+import { booksApi } from '@/store/api/books-api'
+import themeReducer from '@/store/ui/themeSlice'
 
 export const store = configureStore({
   reducer: {
-    [booksApi.reducerPath]: booksApi.reducer
+    [booksApi.reducerPath]: booksApi.reducer,
+    theme: themeReducer
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(booksApi.middleware)
 })

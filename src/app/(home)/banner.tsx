@@ -1,0 +1,41 @@
+'use client'
+
+import clsx from 'clsx'
+import { useSelector } from 'react-redux'
+
+import { Button } from '@/components/ui/button'
+import { RootState } from '@/store/store'
+
+export function Banner() {
+  const isDark = useSelector((state: RootState) => state.theme.isDark)
+
+  return (
+    <section className='relative bg-[url(/images/hero.jpg)] bg-cover bg-center bg-no-repeat'>
+      <div
+        className={clsx(
+          'absolute inset-0 bg-background/75 bg-transparent bg-gradient-to-r',
+          isDark ? 'from-black/95 to-black/25' : 'from-white/95 sm:to-white/25'
+        )}
+      ></div>
+      <div className='relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-[80vh] lg:items-center lg:px-8'>
+        <div className='max-w-xl ltr:sm:text-left rtl:sm:text-right'>
+          <h1 className='text-3xl font-extrabold sm:text-5xl text-foreground'>
+            Quality Dental Care
+            <strong className='block font-extrabold text-rose-700'> in Da Nang, Vietnam </strong>
+          </h1>
+
+          <p className='mt-4 max-w-lg sm:text-xl/relaxed'>
+            Experience world-class dental treatments at a fraction of the cost. Join thousands of
+            satisfied patients who chose Da Nang for their dental care needs.
+          </p>
+
+          <div className='mt-8'>
+            <Button variant='destructive' className='text-sm px-12 py-6 text-md font-semibold'>
+              BOOK NOW
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
