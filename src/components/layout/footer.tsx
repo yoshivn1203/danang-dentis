@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 
 export function Footer() {
   return (
-    <footer className='bg-background border-t'>
+    <footer className='bg-gray-100 dark:bg-gray-900 border-t'>
       <div className='mx-auto max-w-screen-2xl px-4 pt-8 pb-4 sm:px-6 lg:px-8'>
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
           {/* Brand Section */}
@@ -16,7 +16,7 @@ export function Footer() {
             <p className='mt-4 max-w-xs text-muted-foreground'>
               Premium dental care in Da Nang, Vietnam. International standards at affordable prices.
             </p>
-            <div className='mt-8 flex gap-4'>
+            <div className='mt-8 flex gap-2'>
               <Button variant='ghost' size='icon'>
                 <Facebook className='h-5 w-5' />
               </Button>
@@ -34,16 +34,16 @@ export function Footer() {
             <div>
               <p className='font-medium'>Company</p>
               <nav className='mt-4 flex flex-col space-y-2 text-sm text-muted-foreground'>
-                <Link href='/about' className='hover:opacity-75'>
+                <Link href='/' className='hover:opacity-75'>
                   About
                 </Link>
-                <Link href='/how-it-works' className='hover:opacity-75'>
+                <Link href='/' className='hover:opacity-75'>
                   How It Works
                 </Link>
-                <Link href='/pricing' className='hover:opacity-75'>
+                <Link href='/' className='hover:opacity-75'>
                   Pricing
                 </Link>
-                <Link href='/contact' className='hover:opacity-75'>
+                <Link href='/' className='hover:opacity-75'>
                   Contact
                 </Link>
               </nav>
@@ -55,13 +55,13 @@ export function Footer() {
                 <Link href='/services/dental-implants' className='hover:opacity-75'>
                   Dental Implants
                 </Link>
-                <Link href='/services/crowns' className='hover:opacity-75'>
+                <Link href='/' className='hover:opacity-75'>
                   Crowns & Bridges
                 </Link>
-                <Link href='/services/cosmetic' className='hover:opacity-75'>
+                <Link href='/' className='hover:opacity-75'>
                   Cosmetic Dentistry
                 </Link>
-                <Link href='/services/cleaning' className='hover:opacity-75'>
+                <Link href='/' className='hover:opacity-75'>
                   Cleaning & Prevention
                 </Link>
               </nav>
