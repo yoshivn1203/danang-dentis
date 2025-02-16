@@ -17,7 +17,7 @@ export function Header() {
   return (
     <>
       <nav className='border-b'>
-        <div className='mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16 items-center'>
             {/* Mobile menu button */}
             <div className='md:hidden'>
@@ -76,14 +76,20 @@ export function Header() {
                   CHOOSE YOUR PLAN
                 </Button>
               </Link>
-              <Button
-                variant='ghost'
-                size='icon'
-                onClick={() => dispatch(toggleTheme())}
-                className='ml-2'
-              >
-                {isDark ? <Sun className='h-5 w-5' /> : <Moon className='h-5 w-5' />}
-              </Button>
+              <div className='relative'>
+                <Button
+                  variant='ghost'
+                  size='icon'
+                  onClick={() => dispatch(toggleTheme())}
+                  className='ml-2'
+                >
+                  {isDark ? <Sun className='h-5 w-5' /> : <Moon className='h-5 w-5' />}
+                </Button>
+                <div className='bg-foreground text-background py-2 px-4 absolute top-[51px] right-0 z-10 w-[364px]'>
+                  Prefer to talk? Call us to order{' '}
+                  <span className='font-semibold underline'>84-818-548-409</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -132,12 +138,9 @@ export function Header() {
           </div>
         </div>
       </nav>
-      <div className='hidden md:block relative'>
-        <div className='bg-foreground text-background py-2 px-4 absolute right-8 z-10'>
-          Prefer to talk? Call us to order{' '}
-          <span className='font-semibold underline'>84-818-548-409</span>
-        </div>
-      </div>
+      {/* <div className='hidden md:block relative'> */}
+
+      {/* </div> */}
     </>
   )
 }

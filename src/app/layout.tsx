@@ -8,6 +8,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { useSelector } from 'react-redux'
 
+import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
 import { RootState, store } from '@/store/store'
 
@@ -34,7 +35,8 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
     >
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
         <Header />
-        <main className='mx-auto'>{children}</main>
+        <main className='mx-auto flex-1'>{children}</main>
+        <Footer />
       </body>
     </html>
   )
