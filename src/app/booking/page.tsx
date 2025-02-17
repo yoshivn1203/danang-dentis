@@ -229,6 +229,12 @@ const AIRTABLE_TOKEN =
 const AIRTABLE_BASE_ID = 'appOv6GiSHGRpmTYJ'
 const AIRTABLE_TABLE_NAME = 'root'
 
+const paymentUrls = {
+  Basic: 'https://book.stripe.com/test_eVacNBcFgal7fUQ4gg',
+  Silver: 'https://buy.stripe.com/test_8wM3d19t4dxj240bIJ',
+  Gold: 'https://buy.stripe.com/test_dR68xl0Wy8cZcIE002'
+}
+
 export default function BookingPage() {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
   const [currentStep, setCurrentStep] = useState(1)
@@ -303,11 +309,6 @@ export default function BookingPage() {
       }
 
       // If successful, redirect to payment
-      const paymentUrls = {
-        Basic: 'https://book.stripe.com/test_eVacNBcFgal7fUQ4gg',
-        Silver: 'https://buy.stripe.com/test_8wM3d19t4dxj240bIJ',
-        Gold: 'https://buy.stripe.com/test_dR68xl0Wy8cZcIE002'
-      }
       window.location.href = paymentUrls[selectedPackage.name as keyof typeof paymentUrls]
     } catch (error) {
       console.error('Error submitting booking:', error)
