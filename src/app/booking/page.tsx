@@ -14,6 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { DateTimePicker24h } from '@/components/ui/date-time-picker'
 import {
@@ -49,6 +50,12 @@ interface Clinic {
   images: string[]
   description: string
   procedureCategories: ProcedureCategory[]
+}
+
+interface Package {
+  name: string
+  price: number
+  features: string[]
 }
 
 const clinics: Clinic[] = [
@@ -172,10 +179,41 @@ const clinics: Clinic[] = [
   // Add more clinics here
 ]
 
+const packages: Package[] = [
+  {
+    name: 'Basic',
+    price: 25,
+    features: [
+      'Dental clinic booking assistance',
+      'Support during treatment process',
+      'Online consultation'
+    ]
+  },
+  {
+    name: 'Silver',
+    price: 50,
+    features: [
+      'All Basic package features',
+      'Professional translation service',
+      'Medical document translation',
+      'In-person interpreter during treatment'
+    ]
+  },
+  {
+    name: 'Gold',
+    price: 75,
+    features: [
+      'All Silver package features',
+      'Private transportation service',
+      'Airport pickup and drop-off',
+      'Transportation to/from dental clinic'
+    ]
+  }
+]
+
 const formSchema = z.object({
-  firstName: z.string().min(2, 'First name must be at least 2 characters'),
-  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
-  address: z.string().min(5, 'Please enter your full address'),
+  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
   age: z.string().min(1, 'Age is required'),
   nationality: z.string().min(2, 'Nationality is required'),
   appointmentDateTime: z.date({
@@ -189,6 +227,7 @@ const formSchema = z.object({
 export default function BookingPage() {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
   const [currentStep, setCurrentStep] = useState(1)
+  const [selectedPackage, setSelectedPackage] = useState<Package>(packages[0])
 
   const steps = [
     {
@@ -212,9 +251,8 @@ export default function BookingPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      address: '',
+      fullName: '',
+      email: '',
       age: '',
       nationality: '',
       appointmentDateTime: undefined,
@@ -382,12 +420,12 @@ export default function BookingPage() {
                       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <FormField
                           control={form.control}
-                          name='firstName'
+                          name='fullName'
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>First Name</FormLabel>
+                              <FormLabel>Full Name</FormLabel>
                               <FormControl>
-                                <Input placeholder='Enter your first name' {...field} />
+                                <Input placeholder='Enter your full name' {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -396,36 +434,22 @@ export default function BookingPage() {
 
                         <FormField
                           control={form.control}
-                          name='lastName'
+                          name='email'
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Last Name</FormLabel>
+                              <FormLabel>Email</FormLabel>
                               <FormControl>
-                                <Input placeholder='Enter your last name' {...field} />
+                                <Input
+                                  type='email'
+                                  placeholder='Enter your email address'
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
                       </div>
-
-                      <FormField
-                        control={form.control}
-                        name='address'
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Address</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                placeholder='Enter your full address'
-                                className='resize-none'
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
 
                       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <FormField
@@ -514,17 +538,70 @@ export default function BookingPage() {
           {selectedClinic && (
             <Card>
               <CardHeader>
-                <CardTitle>4. Payment</CardTitle>
-                <CardDescription>Complete your booking with payment</CardDescription>
+                <CardTitle>4. Select Package & Payment</CardTitle>
+                <CardDescription>Choose your service package and complete payment</CardDescription>
               </CardHeader>
-              <CardContent>
-                {/* Add your payment form/integration here */}
-                <button
-                  onClick={() => alert('Booking completed!')} // Replace with actual submission logic
-                  className='px-6 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700'
-                >
-                  Complete Booking
-                </button>
+              <CardContent className='space-y-6'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                  {packages.map((pkg, index) => (
+                    <Card
+                      key={index}
+                      className={clsx(
+                        'cursor-pointer transition-all duration-300 border-2  hover:border-rose-200',
+                        selectedPackage?.name === pkg.name &&
+                          'border-rose-500 hover:border-rose-500'
+                      )}
+                      onClick={() => setSelectedPackage(pkg)}
+                    >
+                      <CardHeader>
+                        <CardTitle className='text-center'>{pkg.name}</CardTitle>
+                        <CardDescription className='text-center'>${pkg.price} USD</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className='space-y-2'>
+                          {pkg.features.map((feature, i) => (
+                            <li key={i} className='flex items-start'>
+                              <Check className='h-4 w-4 mr-2 mt-1 text-rose-500' />
+                              <span className='text-sm'>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                <div className='flex justify-center'>
+                  <Button
+                    onClick={form.handleSubmit(
+                      data => {
+                        console.log('Booking Details:', {
+                          formData: data,
+                          selectedClinic: {
+                            id: selectedClinic?.id,
+                            name: selectedClinic?.name,
+                            procedures: selectedClinic?.procedureCategories
+                          },
+                          selectedPackage
+                        })
+                        // Different URLs based on package
+                        const paymentUrls = {
+                          Basic: 'https://book.stripe.com/test_eVacNBcFgal7fUQ4gg',
+                          Silver: 'https://buy.stripe.com/test_8wM3d19t4dxj240bIJ',
+                          Gold: 'https://buy.stripe.com/test_dR68xl0Wy8cZcIE002'
+                        }
+                        window.location.href =
+                          paymentUrls[selectedPackage.name as keyof typeof paymentUrls]
+                      },
+                      errors => {
+                        console.error('Form validation errors:', errors)
+                      }
+                    )}
+                    className='w-64 h-12 mt-8 text-lg bg-gradient-to-r from-amber-300 to-yellow-400 hover:from-amber-400 hover:to-yellow-500 text-white shadow-md'
+                  >
+                    Continue To Payment
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           )}

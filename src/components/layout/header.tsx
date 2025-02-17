@@ -122,7 +122,7 @@ export function Header() {
               md:hidden pb-4 space-y-2
             `}
           >
-            <Link href='/pricing' className='block' onClick={() => setIsMenuOpen(false)}>
+            <Link href='/booking' className='block' onClick={() => setIsMenuOpen(false)}>
               <Button variant='destructive' className='ml-3'>
                 Choose Your Plan
               </Button>
