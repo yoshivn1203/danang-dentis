@@ -224,6 +224,11 @@ const formSchema = z.object({
     .min(10, 'Please provide more detail about your dental problem and the procedures you want')
 })
 
+const AIRTABLE_TOKEN =
+  'patZpwRYDARibM2ff.1f9a66b897fbb7fcc569a74ee0c5137dcef091bf2a1b7c949f737eaece93159d'
+const AIRTABLE_BASE_ID = 'appOv6GiSHGRpmTYJ'
+const AIRTABLE_TABLE_NAME = 'root'
+
 export default function BookingPage() {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
   const [currentStep, setCurrentStep] = useState(1)
@@ -260,9 +265,54 @@ export default function BookingPage() {
     }
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Handle form submission
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!selectedClinic || !selectedPackage) return
+
+    try {
+      const airtableData = {
+        fields: {
+          'Customer Name': values.fullName,
+          Email: values.email,
+          Age: values.age,
+          Nationality: values.nationality,
+          'Appointment Time': values.appointmentDateTime.toISOString(),
+          Description: values.dentalProblem,
+          'Clinic Name': selectedClinic.name,
+          Package: selectedPackage.name,
+          Status: 'Pending'
+        }
+      }
+
+      const encodedTableName = encodeURIComponent(AIRTABLE_TABLE_NAME)
+      const response = await fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodedTableName}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(airtableData)
+        }
+      )
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Airtable error:', errorData)
+        throw new Error('Failed to create record in Airtable')
+      }
+
+      // If successful, redirect to payment
+      const paymentUrls = {
+        Basic: 'https://book.stripe.com/test_eVacNBcFgal7fUQ4gg',
+        Silver: 'https://buy.stripe.com/test_8wM3d19t4dxj240bIJ',
+        Gold: 'https://buy.stripe.com/test_dR68xl0Wy8cZcIE002'
+      }
+      window.location.href = paymentUrls[selectedPackage.name as keyof typeof paymentUrls]
+    } catch (error) {
+      console.error('Error submitting booking:', error)
+      // You might want to show an error message to the user here
+    }
   }
 
   const handleClinicSelect = (clinic: Clinic) => {
@@ -573,30 +623,7 @@ export default function BookingPage() {
 
                 <div className='flex justify-center'>
                   <Button
-                    onClick={form.handleSubmit(
-                      data => {
-                        console.log('Booking Details:', {
-                          formData: data,
-                          selectedClinic: {
-                            id: selectedClinic?.id,
-                            name: selectedClinic?.name,
-                            procedures: selectedClinic?.procedureCategories
-                          },
-                          selectedPackage
-                        })
-                        // Different URLs based on package
-                        const paymentUrls = {
-                          Basic: 'https://book.stripe.com/test_eVacNBcFgal7fUQ4gg',
-                          Silver: 'https://buy.stripe.com/test_8wM3d19t4dxj240bIJ',
-                          Gold: 'https://buy.stripe.com/test_dR68xl0Wy8cZcIE002'
-                        }
-                        window.location.href =
-                          paymentUrls[selectedPackage.name as keyof typeof paymentUrls]
-                      },
-                      errors => {
-                        console.error('Form validation errors:', errors)
-                      }
-                    )}
+                    onClick={form.handleSubmit(onSubmit)}
                     className='w-64 h-12 mt-8 text-lg bg-gradient-to-r from-amber-300 to-yellow-400 hover:from-amber-400 hover:to-yellow-500 text-white shadow-md'
                   >
                     Continue To Payment
