@@ -2,10 +2,27 @@
 
 import { Facebook, Instagram, Mail, MapPin, Phone } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 
 export function Footer() {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const scrollToSection = (sectionId: string) => {
+    if (pathname !== '/') {
+      // If not on home page, just navigate to home with the section hash
+      router.push(`/#${sectionId}`)
+    } else {
+      // If already on home page, scroll to section
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
   return (
     <footer className='bg-gray-50 dark:bg-gray-800 border-t'>
       <div className='mx-auto max-w-screen-2xl px-4 pt-8 pb-4 sm:px-6 lg:px-8'>
@@ -34,35 +51,29 @@ export function Footer() {
             <div>
               <p className='font-medium'>Company</p>
               <nav className='mt-4 flex flex-col space-y-2 text-sm text-muted-foreground'>
-                <Link href='/' className='hover:opacity-75'>
-                  About
-                </Link>
-                <Link href='/' className='hover:opacity-75'>
+                <button
+                  onClick={() => scrollToSection('how-it-works')}
+                  className='text-left hover:opacity-75'
+                >
                   How It Works
-                </Link>
-                <Link href='/' className='hover:opacity-75'>
-                  Pricing
-                </Link>
-                <Link href='/' className='hover:opacity-75'>
-                  Contact
+                </button>
+                <Link href='/about' className='hover:opacity-75'>
+                  About Us
                 </Link>
               </nav>
             </div>
 
             <div>
-              <p className='font-medium'>Services</p>
+              <p className='font-medium'>Legal</p>
               <nav className='mt-4 flex flex-col space-y-2 text-sm text-muted-foreground'>
-                <Link href='/services/dental-implants' className='hover:opacity-75'>
-                  Dental Implants
+                <Link href='/legal' className='hover:opacity-75'>
+                  Legal Notice
                 </Link>
-                <Link href='/' className='hover:opacity-75'>
-                  Crowns & Bridges
+                <Link href='/privacy' className='hover:opacity-75'>
+                  Privacy Policy
                 </Link>
-                <Link href='/' className='hover:opacity-75'>
-                  Cosmetic Dentistry
-                </Link>
-                <Link href='/' className='hover:opacity-75'>
-                  Cleaning & Prevention
+                <Link href='/terms' className='hover:opacity-75'>
+                  Terms of Service
                 </Link>
               </nav>
             </div>
