@@ -1,21 +1,14 @@
 'use client'
 
-import clsx from 'clsx'
-import { useSelector } from 'react-redux'
-
 import { Button } from '@/components/ui/button'
-import { RootState } from '@/store/store'
 
 export function Banner() {
-  const isDark = useSelector((state: RootState) => state.theme.isDark)
-
   return (
     <section className='relative bg-[url(/images/hero.jpg)] bg-cover bg-center bg-no-repeat'>
       <div
-        className={clsx(
-          'absolute inset-0 bg-background/75 bg-transparent bg-gradient-to-r',
-          isDark ? 'from-black/95 to-black/25' : 'from-white/95 sm:to-white/25'
-        )}
+        className={
+          'absolute inset-0 bg-background/75 bg-transparent bg-gradient-to-r from-white/95 sm:to-white/25 dark:from-black/95 dark:to-black/25 '
+        }
       ></div>
       <div className='relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-[80vh] lg:items-center lg:px-8'>
         <div className='max-w-xl ltr:sm:text-left rtl:sm:text-right'>
