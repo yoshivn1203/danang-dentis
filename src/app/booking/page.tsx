@@ -1,9 +1,12 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { Check } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
 import {
   Accordion,
@@ -12,7 +15,17 @@ import {
   AccordionTrigger
 } from '@/components/ui/accordion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { Steps } from '@/components/ui/steps'
+import { Textarea } from '@/components/ui/textarea'
 
 interface Procedure {
   name: string
@@ -32,18 +45,6 @@ interface Clinic {
   images: string[]
   description: string
   procedureCategories: ProcedureCategory[]
-}
-
-interface BookingData {
-  firstName: string
-  lastName: string
-  address: string
-  age: string
-  nationality: string
-  appointmentDate: string
-  appointmentTime: string
-  dentalProblem: string
-  selectedProcedures: string[]
 }
 
 const clinics: Clinic[] = [
@@ -102,20 +103,22 @@ const clinics: Clinic[] = [
   // Add more clinics here
 ]
 
+const formSchema = z.object({
+  firstName: z.string().min(2, 'First name must be at least 2 characters'),
+  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+  address: z.string().min(5, 'Please enter your full address'),
+  age: z.string().min(1, 'Age is required'),
+  nationality: z.string().min(2, 'Nationality is required'),
+  appointmentDate: z.string().min(1, 'Please select a date'),
+  appointmentTime: z.string().min(1, 'Please select a time'),
+  dentalProblem: z
+    .string()
+    .min(10, 'Please provide more detail about your dental problem and the procedures you want')
+})
+
 export default function BookingPage() {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
   const [currentStep, setCurrentStep] = useState(1)
-  const [bookingData, setBookingData] = useState<BookingData>({
-    firstName: '',
-    lastName: '',
-    address: '',
-    age: '',
-    nationality: '',
-    appointmentDate: '',
-    appointmentTime: '',
-    dentalProblem: '',
-    selectedProcedures: []
-  })
 
   const steps = [
     {
@@ -135,6 +138,25 @@ export default function BookingPage() {
       description: 'Complete your booking with payment'
     }
   ]
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      address: '',
+      age: '',
+      nationality: '',
+      appointmentDate: '',
+      appointmentTime: '',
+      dentalProblem: ''
+    }
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Handle form submission
+    console.log(values)
+  }
 
   const handleClinicSelect = (clinic: Clinic) => {
     setSelectedClinic(clinic)
@@ -184,7 +206,7 @@ export default function BookingPage() {
                           'object-cover transition-all duration-300',
                           selectedClinic?.id === clinic.id
                             ? 'opacity-100'
-                            : 'opacity-80 group-hover:opacity-90'
+                            : 'opacity-50 group-hover:opacity-80'
                         )}
                       />
                       {selectedClinic?.id === clinic.id && (
@@ -277,126 +299,157 @@ export default function BookingPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className='space-y-6'>
-                  {/* Personal Information Section */}
-                  <div className='space-y-4'>
-                    <h3 className='font-semibold text-md'>Personal Information</h3>
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                      <div>
-                        <label className='block text-sm font-medium mb-2'>First Name</label>
-                        <input
-                          type='text'
-                          className='w-full p-2 border rounded-lg'
-                          value={bookingData.firstName}
-                          onChange={e =>
-                            setBookingData({ ...bookingData, firstName: e.target.value })
-                          }
-                          placeholder='Enter your first name'
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+                    {/* Personal Information Section */}
+                    <div className='space-y-4'>
+                      <h3 className='font-semibold'>Personal Information</h3>
+                      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <FormField
+                          control={form.control}
+                          name='firstName'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>First Name</FormLabel>
+                              <FormControl>
+                                <Input placeholder='Enter your first name' {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name='lastName'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Last Name</FormLabel>
+                              <FormControl>
+                                <Input placeholder='Enter your last name' {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
                         />
                       </div>
-                      <div>
-                        <label className='block text-sm font-medium mb-2'>Last Name</label>
-                        <input
-                          type='text'
-                          className='w-full p-2 border rounded-lg'
-                          value={bookingData.lastName}
-                          onChange={e =>
-                            setBookingData({ ...bookingData, lastName: e.target.value })
-                          }
-                          placeholder='Enter your last name'
+
+                      <FormField
+                        control={form.control}
+                        name='address'
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Address</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder='Enter your full address'
+                                className='resize-none'
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <FormField
+                          control={form.control}
+                          name='age'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Age</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type='number'
+                                  placeholder='Enter your age'
+                                  min='0'
+                                  max='120'
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name='nationality'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Nationality</FormLabel>
+                              <FormControl>
+                                <Input placeholder='Enter your nationality' {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
                         />
                       </div>
                     </div>
 
-                    <div>
-                      <label className='block text-sm font-medium mb-2'>Address</label>
-                      <textarea
-                        className='w-full p-2 border rounded-lg'
-                        rows={2}
-                        value={bookingData.address}
-                        onChange={e => setBookingData({ ...bookingData, address: e.target.value })}
-                        placeholder='Enter your full address'
+                    {/* Appointment Details Section */}
+                    <div className='space-y-4'>
+                      <h3 className='font-semibold'>Appointment Details</h3>
+                      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <FormField
+                          control={form.control}
+                          name='appointmentDate'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Appointment Date</FormLabel>
+                              <FormControl>
+                                <Input type='date' lang='en-GB' {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name='appointmentTime'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Preferred Time</FormLabel>
+                              <FormControl>
+                                <Input type='time' step='1800' lang='en' {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name='dentalProblem'
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              Describe Your Dental Problem And The Procedures You Want
+                            </FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder='Please describe your dental concerns'
+                                className='resize-none'
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
                     </div>
-
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                      <div>
-                        <label className='block text-sm font-medium mb-2'>Age</label>
-                        <input
-                          type='number'
-                          className='w-full p-2 border rounded-lg'
-                          value={bookingData.age}
-                          onChange={e => setBookingData({ ...bookingData, age: e.target.value })}
-                          placeholder='Enter your age'
-                          min='0'
-                          max='120'
-                        />
-                      </div>
-                      <div>
-                        <label className='block text-sm font-medium mb-2'>Nationality</label>
-                        <input
-                          type='text'
-                          className='w-full p-2 border rounded-lg'
-                          value={bookingData.nationality}
-                          onChange={e =>
-                            setBookingData({ ...bookingData, nationality: e.target.value })
-                          }
-                          placeholder='Enter your nationality'
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Appointment Details Section */}
-                  <div className='space-y-4'>
-                    <h3 className='font-semibold text-md'>Appointment Details</h3>
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                      <div>
-                        <label className='block text-sm font-medium mb-2'>Appointment Date</label>
-                        <input
-                          type='date'
-                          className='w-full p-2 border rounded-lg'
-                          value={bookingData.appointmentDate}
-                          onChange={e =>
-                            setBookingData({ ...bookingData, appointmentDate: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label className='block text-sm font-medium mb-2'>Preferred Time</label>
-                        <input
-                          type='time'
-                          className='w-full p-2 border rounded-lg'
-                          value={bookingData.appointmentTime}
-                          onChange={e =>
-                            setBookingData({ ...bookingData, appointmentTime: e.target.value })
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className='block text-sm font-medium mb-2'>
-                        Describe Your Dental Problem
-                      </label>
-                      <textarea
-                        className='w-full p-2 border rounded-lg'
-                        rows={4}
-                        value={bookingData.dentalProblem}
-                        onChange={e =>
-                          setBookingData({ ...bookingData, dentalProblem: e.target.value })
-                        }
-                        placeholder='Please describe your dental concerns'
-                      />
-                    </div>
-                  </div>
-                </div>
+                  </form>
+                </Form>
               </CardContent>
             </Card>
           )}
 
           {/* Step 4: Payment */}
-          {selectedClinic && bookingData.appointmentDate && bookingData.appointmentTime && (
+          {selectedClinic && (
             <Card>
               <CardHeader>
                 <CardTitle>4. Payment</CardTitle>
