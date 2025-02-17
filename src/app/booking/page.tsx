@@ -15,6 +15,7 @@ import {
   AccordionTrigger
 } from '@/components/ui/accordion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { DateTimePicker24h } from '@/components/ui/date-time-picker'
 import {
   Form,
   FormControl,
@@ -29,7 +30,10 @@ import { Textarea } from '@/components/ui/textarea'
 
 interface Procedure {
   name: string
-  price: number
+  price: {
+    usd: number
+    vnd: number
+  }
   duration: string
 }
 
@@ -62,18 +66,83 @@ const clinics: Clinic[] = [
       {
         name: 'Implant Procedures',
         procedures: [
-          { name: 'Single Implant', price: 1200, duration: '2-3 hours' },
-          { name: 'Multiple Implants', price: 2200, duration: '3-4 hours' }
+          {
+            name: 'Single Implant',
+            price: { usd: 1200, vnd: 29000000 },
+            duration: '2-3 hours'
+          },
+          {
+            name: 'Multiple Implants (3 teeth)',
+            price: { usd: 3200, vnd: 77000000 },
+            duration: '4-5 hours'
+          },
+          {
+            name: 'All-on-4 Implants',
+            price: { usd: 8500, vnd: 205000000 },
+            duration: '6-8 hours'
+          }
         ]
       },
       {
-        name: 'Crowns/Veneers',
+        name: 'Cosmetic Dentistry',
         procedures: [
-          { name: 'Porcelain Crown', price: 500, duration: '1-2 hours' },
-          { name: 'Dental Veneers', price: 400, duration: '1-2 hours' }
+          {
+            name: 'Porcelain Crown',
+            price: { usd: 500, vnd: 12000000 },
+            duration: '1-2 hours'
+          },
+          {
+            name: 'Dental Veneers (per tooth)',
+            price: { usd: 400, vnd: 9600000 },
+            duration: '1-2 hours'
+          },
+          {
+            name: 'Teeth Whitening',
+            price: { usd: 300, vnd: 7200000 },
+            duration: '1-1.5 hours'
+          }
+        ]
+      },
+      {
+        name: 'General Dentistry',
+        procedures: [
+          {
+            name: 'Tooth Filling',
+            price: { usd: 50, vnd: 1200000 },
+            duration: '30-45 mins'
+          },
+          {
+            name: 'Root Canal Treatment',
+            price: { usd: 250, vnd: 6000000 },
+            duration: '1-2 hours'
+          },
+          {
+            name: 'Deep Cleaning',
+            price: { usd: 100, vnd: 2400000 },
+            duration: '1 hour'
+          }
+        ]
+      },
+      {
+        name: 'Orthodontics',
+        procedures: [
+          {
+            name: 'Traditional Braces',
+            price: { usd: 2500, vnd: 60000000 },
+            duration: '18-24 months'
+          },
+          {
+            name: 'Clear Aligners',
+            price: { usd: 3500, vnd: 84000000 },
+            duration: '12-18 months'
+          },
+          {
+            name: 'Retainers',
+            price: { usd: 200, vnd: 4800000 },
+            duration: '30 mins'
+          }
         ]
       }
-      // Add more categories as needed
     ]
   },
   {
@@ -86,15 +155,15 @@ const clinics: Clinic[] = [
       {
         name: 'Implant Procedures',
         procedures: [
-          { name: 'Single Implant', price: 1200, duration: '2-3 hours' },
-          { name: 'Multiple Implants', price: 2200, duration: '3-4 hours' }
+          { name: 'Single Implant', price: { usd: 1200, vnd: 29000000 }, duration: '2-3 hours' },
+          { name: 'Multiple Implants', price: { usd: 2200, vnd: 77000000 }, duration: '3-4 hours' }
         ]
       },
       {
         name: 'Crowns/Veneers',
         procedures: [
-          { name: 'Porcelain Crown', price: 500, duration: '1-2 hours' },
-          { name: 'Dental Veneers', price: 400, duration: '1-2 hours' }
+          { name: 'Porcelain Crown', price: { usd: 500, vnd: 12000000 }, duration: '1-2 hours' },
+          { name: 'Dental Veneers', price: { usd: 400, vnd: 9600000 }, duration: '1-2 hours' }
         ]
       }
       // Add more categories as needed
@@ -109,8 +178,9 @@ const formSchema = z.object({
   address: z.string().min(5, 'Please enter your full address'),
   age: z.string().min(1, 'Age is required'),
   nationality: z.string().min(2, 'Nationality is required'),
-  appointmentDate: z.string().min(1, 'Please select a date'),
-  appointmentTime: z.string().min(1, 'Please select a time'),
+  appointmentDateTime: z.date({
+    required_error: 'Please select appointment date and time'
+  }),
   dentalProblem: z
     .string()
     .min(10, 'Please provide more detail about your dental problem and the procedures you want')
@@ -147,8 +217,7 @@ export default function BookingPage() {
       address: '',
       age: '',
       nationality: '',
-      appointmentDate: '',
-      appointmentTime: '',
+      appointmentDateTime: undefined,
       dentalProblem: ''
     }
   })
@@ -254,13 +323,13 @@ export default function BookingPage() {
                   <div className='space-y-4 mt-8'>
                     <h2 className='text-2xl font-bold'>Prices and Procedures</h2>
 
-                    <Accordion type='single' collapsible className='w-full'>
+                    <Accordion type='single' collapsible className='w-full' defaultValue='item-0'>
                       {selectedClinic.procedureCategories.map((category, index) => (
                         <AccordionItem key={index} value={`item-${index}`}>
-                          <AccordionTrigger className='px-4'>
+                          <AccordionTrigger className='sm:px-4 font-semibold'>
                             {`${index + 1}. ${category.name}`}
                           </AccordionTrigger>
-                          <AccordionContent className='px-4'>
+                          <AccordionContent className='sm:px-4 sm:ml-4'>
                             <table className='w-full'>
                               <thead>
                                 <tr className='text-sm text-muted-foreground'>
@@ -273,7 +342,13 @@ export default function BookingPage() {
                                 {category.procedures.map((procedure, procIndex) => (
                                   <tr key={procIndex} className='border-t'>
                                     <td className='py-2'>{procedure.name}</td>
-                                    <td className='text-right py-2'>${procedure.price}</td>
+                                    <td className='text-right py-2'>
+                                      ${procedure.price.usd} USD
+                                      <br />
+                                      <span className='text-muted-foreground'>
+                                        {procedure.price.vnd.toLocaleString()} VND
+                                      </span>
+                                    </td>
                                     <td className='text-right py-2'>{procedure.duration}</td>
                                   </tr>
                                 ))}
@@ -392,35 +467,22 @@ export default function BookingPage() {
                     {/* Appointment Details Section */}
                     <div className='space-y-4'>
                       <h3 className='font-semibold'>Appointment Details</h3>
-                      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                        <FormField
-                          control={form.control}
-                          name='appointmentDate'
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Appointment Date</FormLabel>
-                              <FormControl>
-                                <Input type='date' lang='en-GB' {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name='appointmentTime'
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Preferred Time</FormLabel>
-                              <FormControl>
-                                <Input type='time' step='1800' lang='en' {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+                      <FormField
+                        control={form.control}
+                        name='appointmentDateTime'
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Appointment Date and Time</FormLabel>
+                            <FormControl>
+                              <DateTimePicker24h
+                                date={field.value}
+                                setDate={date => field.onChange(date)}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
                       <FormField
                         control={form.control}
