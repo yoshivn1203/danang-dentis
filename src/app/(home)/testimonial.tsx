@@ -33,7 +33,7 @@ export function Testimonials() {
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className='border-none shadow-lg dark:bg-gray-800'>
+            <Card key={index} className='border shadow-lg dark:bg-gray-800'>
               <CardHeader>
                 <div className='flex gap-1'>
                   {[...Array(testimonial.stars)].map((_, i) => (
