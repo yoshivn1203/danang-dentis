@@ -15,7 +15,7 @@ export function HowItWorks() {
           <div className='flex flex-col md:flex-row items-center gap-8'>
             <div className='w-full md:w-1/2 relative z-10 bg-background shadow-lg border p-12 rounded-lg dark:bg-gray-900'>
               <div className='mb-6'>
-                <span className='text-2xl font-bold text-destructive mr-2'>1</span>
+                <span className='text-2xl font-bold text-rose-600  mr-2'>1</span>
                 <span className='text-2xl font-semibold'>We Curate</span>
               </div>
               <div className='max-w-sm'>
@@ -27,7 +27,7 @@ export function HowItWorks() {
             </div>
             <div className='hidden md:block md:w-3/4 h-96 bg-muted rounded-lg relative -ml-16'>
               <Image
-                src='/images/1.jpg'
+                src='/images/step-1.jpg'
                 alt='Dental Clinic'
                 layout='fill'
                 objectFit='cover'
@@ -40,7 +40,7 @@ export function HowItWorks() {
           <div className='flex flex-col md:flex-row items-center gap-8'>
             <div className='hidden md:block md:w-3/4 h-96 bg-muted rounded-lg relative'>
               <Image
-                src='/images/1.jpg'
+                src='/images/step-2.jpg'
                 alt='Dental Clinic'
                 layout='fill'
                 objectFit='cover'
@@ -49,8 +49,8 @@ export function HowItWorks() {
             </div>
             <div className='w-full md:w-1/2 relative z-10 bg-background shadow-lg border p-12 rounded-lg md:-ml-16 dark:bg-gray-900'>
               <div className='mb-4'>
-                <span className='text-2xl font-bold text-destructive mr-2'>2</span>
-                <span className='text-2xl font-semibold'>We Choose</span>
+                <span className='text-2xl font-bold text-rose-600 mr-2'>2</span>
+                <span className='text-2xl font-semibold'>You Choose</span>
               </div>
               <div className='max-w-sm'>
                 <p className='text-muted-foreground mb-4'>
@@ -65,7 +65,7 @@ export function HowItWorks() {
           <div className='flex flex-col md:flex-row items-center gap-8'>
             <div className='w-full md:w-1/2 relative z-10 bg-background shadow-lg border p-12 rounded-lg dark:bg-gray-900'>
               <div className='mb-6'>
-                <span className='text-2xl font-bold text-destructive mr-2'>3</span>
+                <span className='text-2xl font-bold text-rose-600 mr-2'>3</span>
                 <span className='text-2xl font-semibold'>We Support</span>
               </div>
               <div className='max-w-sm'>
@@ -77,7 +77,7 @@ export function HowItWorks() {
             </div>
             <div className='hidden md:block md:w-3/4 h-96 bg-muted rounded-lg relative -ml-16'>
               <Image
-                src='/images/1.jpg'
+                src='/images/step-3.jpg'
                 alt='Dental Clinic'
                 layout='fill'
                 objectFit='cover'
@@ -90,7 +90,7 @@ export function HowItWorks() {
           <div className='flex flex-col md:flex-row items-center gap-8'>
             <div className='hidden md:block md:w-3/4 h-96 bg-muted rounded-lg relative'>
               <Image
-                src='/images/1.jpg'
+                src='/images/step-4.jpg'
                 alt='Dental Clinic'
                 layout='fill'
                 objectFit='cover'
@@ -99,7 +99,7 @@ export function HowItWorks() {
             </div>
             <div className='w-full md:w-1/2 relative z-10 bg-background shadow-lg border p-12 rounded-lg md:-ml-16 dark:bg-gray-900'>
               <div className='mb-4'>
-                <span className='text-2xl font-bold text-destructive mr-2'>4</span>
+                <span className='text-2xl font-bold text-rose-600 mr-2'>4</span>
                 <span className='text-2xl font-semibold'>You Smile</span>
               </div>
               <div className='max-w-sm'>
