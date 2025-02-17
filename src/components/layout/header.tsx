@@ -71,7 +71,7 @@ export function Header() {
                   Contact
                 </Button>
               </Link>
-              <Link href='/pricing'>
+              <Link href='/booking'>
                 <Button variant='destructive' className='font-semibold'>
                   CHOOSE YOUR PLAN
                 </Button>

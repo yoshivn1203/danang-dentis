@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 import { Button } from '@/components/ui/button'
 
 export function Banner() {
@@ -23,9 +25,11 @@ export function Banner() {
           </p>
 
           <div className='mt-8'>
-            <Button variant='destructive' className='text-sm px-12 py-6 text-md font-semibold'>
-              BOOK NOW
-            </Button>
+            <Link href='/booking'>
+              <Button variant='destructive' className='text-sm px-12 py-6 text-md font-semibold'>
+                BOOK NOW
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

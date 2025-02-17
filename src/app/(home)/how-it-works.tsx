@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 
@@ -113,9 +114,11 @@ export function HowItWorks() {
         </div>
 
         <div className='mt-16 text-center'>
-          <Button variant='destructive' className='text-sm px-12 py-6 text-md font-semibold'>
-            SCHEDULE NOW
-          </Button>
+          <Link href='/booking'>
+            <Button variant='destructive' className='text-sm px-12 py-6 text-md font-semibold'>
+              SCHEDULE NOW
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
