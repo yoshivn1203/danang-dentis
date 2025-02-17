@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -13,6 +14,22 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const isDark = useSelector((state: RootState) => state.theme.isDark)
   const dispatch = useDispatch()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const scrollToSection = (sectionId: string) => {
+    if (pathname !== '/') {
+      // If not on home page, just navigate to home with the section hash
+      router.push(`/#${sectionId}`)
+    } else {
+      // If already on home page, scroll to section
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+        setIsMenuOpen(false)
+      }
+    }
+  }
 
   return (
     <>
@@ -51,24 +68,23 @@ export function Header() {
 
             {/* Desktop Navigation */}
             <div className='hidden md:flex space-x-4 items-center'>
-              <Link href='/'>
-                <Button variant='ghost' className='font-semibold'>
-                  Home
-                </Button>
-              </Link>
+              <Button
+                variant='ghost'
+                className='font-semibold'
+                onClick={() => scrollToSection('how-it-works')}
+              >
+                How It Works
+              </Button>
+              <Button
+                variant='ghost'
+                className='font-semibold'
+                onClick={() => scrollToSection('reviews')}
+              >
+                Reviews
+              </Button>
               <Link href='/about'>
                 <Button variant='ghost' className='font-semibold'>
-                  About
-                </Button>
-              </Link>
-              <Link href='/how-it-works'>
-                <Button variant='ghost' className='font-semibold'>
-                  How It Works
-                </Button>
-              </Link>
-              <Link href='/contact'>
-                <Button variant='ghost' className='font-semibold'>
-                  Contact
+                  About Us
                 </Button>
               </Link>
               <Link href='/booking'>
@@ -115,24 +131,24 @@ export function Header() {
               Prefer to talk? Call us to order{' '}
               <span className='font-semibold underline'>+84-818-548-409</span>
             </div>
-            <Link href='/' className='block' onClick={() => setIsMenuOpen(false)}>
-              <Button variant='ghost' className='w-full justify-start font-semibold'>
-                Home
-              </Button>
-            </Link>
-            <Link href='/about' className='block' onClick={() => setIsMenuOpen(false)}>
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start font-semibold'
+              onClick={() => scrollToSection('how-it-works')}
+            >
+              How It Works
+            </Button>
+            <Button
+              variant='ghost'
+              className='w-full justify-start font-semibold'
+              onClick={() => scrollToSection('reviews')}
+            >
+              Reviews
+            </Button>
+            <Link href='/about' onClick={() => setIsMenuOpen(false)}>
               <Button variant='ghost' className='w-full justify-start font-semibold'>
                 About
-              </Button>
-            </Link>
-            <Link href='/how-it-works' className='block' onClick={() => setIsMenuOpen(false)}>
-              <Button variant='ghost' className='w-full justify-start font-semibold'>
-                How It Works
-              </Button>
-            </Link>
-            <Link href='/contact' className='block' onClick={() => setIsMenuOpen(false)}>
-              <Button variant='ghost' className='w-full justify-start font-semibold'>
-                Contact
               </Button>
             </Link>
           </div>
