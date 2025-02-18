@@ -1,11 +1,9 @@
 'use client'
 
 import { format } from 'date-fns'
-// @ts-ignore
-import html2pdf from 'html2pdf.js'
 import { CheckCircle, Download, Printer } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -20,7 +18,7 @@ interface OrderDetails {
   // Add other fields you want to display
 }
 
-export default function SuccessPage() {
+function BookingSuccess() {
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null)
   const [loading, setLoading] = useState(true)
   const searchParams = useSearchParams()
@@ -49,8 +47,11 @@ export default function SuccessPage() {
     window.print()
   }
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     if (receiptRef.current) {
+      // Dynamically import html2pdf only when needed
+      const html2pdf = (await import('html2pdf.js')).default as any
+
       const opt = {
         margin: 1,
         filename: `booking-receipt-${orderDetails?.paymentId}.pdf`,
@@ -135,5 +136,14 @@ export default function SuccessPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+// Create a new default export that wraps the component in Suspense
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BookingSuccess />
+    </Suspense>
   )
 }
