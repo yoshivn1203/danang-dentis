@@ -3,7 +3,7 @@
 import { format } from 'date-fns'
 import { CheckCircle, Download, Loader2, Printer } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -18,7 +18,7 @@ interface OrderDetails {
   // Add other fields you want to display
 }
 
-function BookingSuccess() {
+export default function SuccessPage() {
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -155,14 +155,5 @@ function BookingSuccess() {
         </CardContent>
       </Card>
     </div>
-  )
-}
-
-// Create a new default export that wraps the component in Suspense
-export default function SuccessPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <BookingSuccess />
-    </Suspense>
   )
 }

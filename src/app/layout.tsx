@@ -3,8 +3,9 @@
 import './globals.css'
 
 import clsx from 'clsx'
+import { Loader2 } from 'lucide-react'
 import { Geist, Geist_Mono } from 'next/font/google'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { useSelector } from 'react-redux'
 
@@ -22,6 +23,15 @@ const geistMono = Geist_Mono({
   subsets: ['latin']
 })
 
+function LoadingSpinner() {
+  return (
+    <div className='h-[80vh] w-full flex flex-col items-center justify-center gap-4'>
+      <Loader2 className='h-8 w-8 animate-spin text-primary' />
+      <p className='text-muted-foreground'>Loading...</p>
+    </div>
+  )
+}
+
 function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const isDark = useSelector((state: RootState) => state.theme.isDark)
 
@@ -35,7 +45,9 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
     >
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
         <Header />
-        <main className='mx-auto flex-1'>{children}</main>
+        <Suspense fallback={<LoadingSpinner />}>
+          <main className='mx-auto flex-1'>{children}</main>
+        </Suspense>
         <Footer />
       </body>
     </html>
