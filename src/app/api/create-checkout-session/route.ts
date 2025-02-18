@@ -1,18 +1,11 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-export const STRIPE_SECRET_KEY =
-  'sk_test_51KpppUAyTlZOsQoKy9fYYcn0RWpr3sz48BgGXhQw3K5ZzLFOeZhODwkDNPyg4l4UNPzV6skfU5NqIC2JEZuh2LMB00mO0Fnc7v'
+import { PACKAGE_PRICES, STRIPE_SECRET_KEY } from '@/lib/constants'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2025-01-27.acacia'
 })
-
-const PACKAGE_PRICES = {
-  Basic: 25,
-  Silver: 50,
-  Gold: 75
-}
 
 export async function POST(req: Request) {
   const { packageName, bookingData } = await req.json()

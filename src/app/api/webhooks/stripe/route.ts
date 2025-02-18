@@ -2,13 +2,13 @@ import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-import { STRIPE_SECRET_KEY } from '../../create-checkout-session/route'
-const STRIPE_WEBHOOK_SECRET = 'whsec_6iA9HQW13Xmy9EELfSBIugJr4XRE5dWu'
-
-const AIRTABLE_TOKEN =
-  'patZpwRYDARibM2ff.1f9a66b897fbb7fcc569a74ee0c5137dcef091bf2a1b7c949f737eaece93159d'
-const AIRTABLE_BASE_ID = 'appOv6GiSHGRpmTYJ'
-const AIRTABLE_TABLE_NAME = 'root'
+import {
+  AIRTABLE_BASE_ID,
+  AIRTABLE_TABLE_NAME,
+  AIRTABLE_TOKEN,
+  STRIPE_SECRET_KEY,
+  STRIPE_WEBHOOK_SECRET
+} from '@/lib/constants'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2025-01-27.acacia'
