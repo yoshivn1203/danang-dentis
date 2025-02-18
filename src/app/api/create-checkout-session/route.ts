@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-import { PACKAGE_PRICES, STRIPE_SECRET_KEY } from '@/lib/constants'
+import { BASE_FE_URL, PACKAGE_PRICES, STRIPE_SECRET_KEY } from '@/lib/constants'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2025-01-27.acacia'
@@ -14,8 +14,8 @@ export async function POST(req: Request) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: `https://danang-dentis.vercel.app/booking/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `https://danang-dentis.vercel.app/booking/cancel`,
+      success_url: `${BASE_FE_URL}/booking/success?session_id={CHECKOUT_SESSION_ID}&package=${packageName}`,
+      cancel_url: `${BASE_FE_URL}/booking/cancel`,
       customer_email: bookingData.email,
       metadata: {
         ...bookingData // Store all booking data in metadata
