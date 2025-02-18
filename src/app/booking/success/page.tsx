@@ -1,7 +1,7 @@
 'use client'
 
 import { format } from 'date-fns'
-import { CheckCircle, Download, Printer } from 'lucide-react'
+import { CheckCircle, Download, Loader2, Printer } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useEffect, useRef, useState } from 'react'
 
@@ -21,6 +21,7 @@ interface OrderDetails {
 function BookingSuccess() {
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const receiptRef = useRef<HTMLDivElement>(null)
@@ -33,6 +34,7 @@ function BookingSuccess() {
         setOrderDetails(data)
       } catch (error) {
         console.error('Error fetching order details:', error)
+        setError('An error occurred while fetching your booking details.')
       } finally {
         setLoading(false)
       }
@@ -64,11 +66,28 @@ function BookingSuccess() {
   }
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className='h-[80vh] w-full flex flex-col items-center justify-center gap-4'>
+        <Loader2 className='h-8 w-8 animate-spin text-primary' />
+        <p className='text-muted-foreground'>Loading your booking details...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className='h-[80vh] w-full flex flex-col items-center justify-center gap-4'>
+        <p className='text-muted-foreground'>{error}</p>
+      </div>
+    )
   }
 
   if (!orderDetails) {
-    return <div>Order details not found</div>
+    return (
+      <div className='h-[80vh] w-full flex flex-col items-center justify-center gap-4'>
+        <p className='text-muted-foreground'>Order details not found</p>
+      </div>
+    )
   }
 
   const formattedDate = orderDetails.appointmentTime
@@ -76,7 +95,7 @@ function BookingSuccess() {
     : 'Not available'
 
   return (
-    <div className='max-w-2xl mx-auto p-6 mt-16 space-y-6'>
+    <div className='max-w-3xl mx-auto p-6 mt-16 mb-16 space-y-6'>
       <div className='text-center space-y-2'>
         <h1 className='text-3xl font-bold'>Thank You for Your Booking!</h1>
         <p className='text-muted-foreground'>
