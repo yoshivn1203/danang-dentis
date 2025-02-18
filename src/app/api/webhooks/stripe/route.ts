@@ -37,8 +37,39 @@ export async function POST(req: Request) {
     }
 
     try {
-      // Create record in Airtable
+      // Check if record already exists
       const encodedTableName = encodeURIComponent(AIRTABLE_TABLE_NAME)
+      const checkResponse = await fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodedTableName}?filterByFormula={Payment ID}="${session.id}"`,
+        {
+          headers: {
+            Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      const existingRecords = await checkResponse.json()
+
+      // If record already exists, return success without creating duplicate
+      if (existingRecords.records && existingRecords.records.length > 0) {
+        return NextResponse.json({ received: true })
+      }
+
+      const requestData = {
+        'Customer Name': metadata.customerName,
+        Email: metadata.email,
+        Age: metadata.age,
+        Nationality: metadata.nationality,
+        'Appointment Time': metadata.appointmentTime,
+        Description: metadata.description,
+        Package: metadata.package,
+        'Clinic Name': metadata.clinicName,
+        Status: 'Paid',
+        'Payment ID': session.id
+      }
+
+      // Create record in Airtable only if it doesn't exist
       const response = await fetch(
         `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodedTableName}`,
         {
@@ -48,24 +79,22 @@ export async function POST(req: Request) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            fields: {
-              'Customer Name': metadata.customerName,
-              Email: metadata.email,
-              Age: metadata.age,
-              Nationality: metadata.nationality,
-              'Appointment Time': metadata.appointmentTime,
-              Description: metadata.description,
-              'Clinic Name': metadata.clinicName,
-              Package: metadata.package,
-              Status: 'Paid',
-              'Payment ID': session.id
-            }
+            fields: requestData
           })
         }
       )
 
       if (!response.ok) {
-        throw new Error('Failed to create record in Airtable')
+        const errorData = await response.json()
+        console.error('Airtable error:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData
+        })
+        return NextResponse.json(
+          { error: `Failed to create record in Airtable: ${response.statusText}` },
+          { status: response.status }
+        )
       }
     } catch (error) {
       console.error('Error saving booking:', error)
