@@ -72,7 +72,7 @@ export default function BookingPage() {
       description: 'Select your preferred date and time'
     },
     {
-      title: 'Payment',
+      title: 'Select Package & Payment',
       description: 'Complete your booking with payment'
     }
   ]
@@ -191,30 +191,28 @@ export default function BookingPage() {
                 {clinics.map(clinic => (
                   <div
                     key={clinic.id}
-                    className='cursor-pointer group'
+                    className='cursor-pointer group relative'
                     onClick={() => handleClinicSelect(clinic)}
                   >
                     <div
                       className={clsx(
                         'relative aspect-video rounded-lg overflow-hidden',
-                        'transition-all duration-300',
-                        selectedClinic?.id === clinic.id && 'ring-2 ring-rose-600'
+                        selectedClinic?.id === clinic.id
+                          ? 'border-2 border-rose-500'
+                          : 'opacity-70 hover:opacity-100 transition-opacity'
                       )}
                     >
                       <Image
                         src={clinic.thumbnail}
                         alt={clinic.name}
                         fill
-                        className={clsx(
-                          'object-cover transition-all duration-300',
-                          selectedClinic?.id === clinic.id
-                            ? 'opacity-100'
-                            : 'opacity-50 group-hover:opacity-80'
-                        )}
+                        className='object-cover'
                       />
                       {selectedClinic?.id === clinic.id && (
-                        <div className='absolute top-2 right-2 bg-rose-600 text-white rounded-full p-1'>
-                          <Check className='h-4 w-4' />
+                        <div className='absolute top-0 right-0'>
+                          <div className='bg-rose-500 text-white px-3 py-1 rounded-bl'>
+                            Selected
+                          </div>
                         </div>
                       )}
                     </div>
@@ -505,22 +503,33 @@ export default function BookingPage() {
                     <Card
                       key={index}
                       className={clsx(
-                        'cursor-pointer transition-all duration-300 border-2  hover:border-rose-200',
-                        selectedPackage?.name === pkg.name &&
-                          'border-rose-500 hover:border-rose-500'
+                        'cursor-pointer transition-all duration-300 relative overflow-hidden',
+                        'hover:shadow-xl transform hover:-translate-y-1',
+                        selectedPackage?.name === pkg.name
+                          ? 'border-2 border-rose-500 shadow-lg'
+                          : 'border hover:border-rose-200'
                       )}
                       onClick={() => setSelectedPackage(pkg)}
                     >
-                      <CardHeader>
-                        <CardTitle className='text-center'>{pkg.name}</CardTitle>
-                        <CardDescription className='text-center'>${pkg.price} USD</CardDescription>
+                      {selectedPackage?.name === pkg.name && (
+                        <div className='absolute top-0 right-0'>
+                          <div className='bg-rose-500 text-white px-3 py-1 rounded-bl'>
+                            Selected
+                          </div>
+                        </div>
+                      )}
+                      <CardHeader className='text-center pb-4 pt-6 bg-gradient-to-b from-rose-50'>
+                        <CardTitle className='text-xl'>{pkg.name}</CardTitle>
+                        <CardDescription className='text-2xl font-bold text-rose-600 mt-2'>
+                          ${pkg.price} USD
+                        </CardDescription>
                       </CardHeader>
-                      <CardContent>
-                        <ul className='space-y-2'>
+                      <CardContent className='pt-4'>
+                        <ul className='space-y-3'>
                           {pkg.features.map((feature, i) => (
                             <li key={i} className='flex items-start'>
-                              <Check className='h-4 w-4 mr-2 mt-1 text-rose-500' />
-                              <span className='text-sm'>{feature}</span>
+                              <Check className='h-5 w-5 mr-2 mt-0.5 text-rose-500 shrink-0' />
+                              <span className='text-sm text-gray-600'>{feature}</span>
                             </li>
                           ))}
                         </ul>
@@ -533,7 +542,7 @@ export default function BookingPage() {
                   <Button
                     onClick={form.handleSubmit(onSubmit)}
                     disabled={isSubmitting}
-                    className='w-64 h-12 mt-8 text-lg bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white shadow-md'
+                    className='w-64 h-12 mt-8 text-white text-lg bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium dark:focus:ring-[#F7BE38]/50  shadow-md'
                   >
                     {isSubmitting ? 'Processing...' : 'Continue To Payment'}
                   </Button>
