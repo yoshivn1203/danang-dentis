@@ -37,6 +37,9 @@ export async function POST(req: Request) {
     }
 
     try {
+      // Add a delay before checking for existing records to make sure data is saved
+      await new Promise(resolve => setTimeout(resolve, 2000)) // 2 second delay
+
       // Check if record already exists
       const encodedTableName = encodeURIComponent(AIRTABLE_TABLE_NAME)
       const checkResponse = await fetch(
