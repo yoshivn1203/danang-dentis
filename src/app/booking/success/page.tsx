@@ -95,10 +95,10 @@ export default function SuccessPage() {
     : 'Not available'
 
   return (
-    <div className='max-w-3xl mx-auto p-6 mt-16 mb-16 space-y-6'>
+    <div className='max-w-2xl mx-auto p-6 mt-16 mb-16 space-y-6'>
       <div className='text-center space-y-2'>
         <h1 className='text-3xl font-bold'>Thank You for Your Booking!</h1>
-        <p className='text-muted-foreground'>
+        <p className='text-muted-foreground !mt-4'>
           Please download or print this receipt for your records. We will contact you within 1-2
           days with more details.
         </p>
@@ -139,7 +139,7 @@ export default function SuccessPage() {
 
           <div className='space-y-2'>
             <p className='text-sm text-muted-foreground'>Payment ID</p>
-            <p className='font-medium font-mono break-all'>{orderDetails.paymentId}</p>
+            <p className='font-medium text-sm font-mono break-all'>{orderDetails.paymentId}</p>
           </div>
 
           <div className='flex flex-col sm:flex-row gap-4 mt-6 print:hidden'>

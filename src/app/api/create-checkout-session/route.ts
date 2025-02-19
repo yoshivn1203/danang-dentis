@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-import { BASE_FE_URL, PACKAGE_PRICES, STRIPE_SECRET_KEY } from '@/lib/constants'
+import { BASE_FE_URL, STRIPE_SECRET_KEY } from '@/lib/constants'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2025-01-27.acacia'
 })
 
 export async function POST(req: Request) {
-  const { packageName, bookingData } = await req.json()
+  const { packageName, packagePrice, bookingData } = await req.json()
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
             product_data: {
               name: `${packageName} Package`
             },
-            unit_amount: PACKAGE_PRICES[packageName as keyof typeof PACKAGE_PRICES] * 100
+            unit_amount: packagePrice * 100
           },
           quantity: 1
         }

@@ -29,187 +29,7 @@ import { Input } from '@/components/ui/input'
 import { Steps } from '@/components/ui/steps'
 import { Textarea } from '@/components/ui/textarea'
 
-interface Procedure {
-  name: string
-  price: {
-    usd: number
-    vnd: number
-  }
-  duration: string
-}
-
-interface ProcedureCategory {
-  name: string
-  procedures: Procedure[]
-}
-
-interface Clinic {
-  id: number
-  name: string
-  thumbnail: string
-  images: string[]
-  description: string
-  procedureCategories: ProcedureCategory[]
-}
-
-interface Package {
-  name: string
-  price: number
-  features: string[]
-}
-
-const clinics: Clinic[] = [
-  {
-    id: 1,
-    name: 'Dr.Bao Dental Clinic',
-    thumbnail: '/images/dr-bao/dr-bao-1.jpg',
-    images: [
-      '/images/dr-bao/dr-bao-2.jpg',
-      '/images/dr-bao/dr-bao-3.jpg',
-      '/images/dr-bao/dr-bao-4.png'
-    ],
-    description: 'Modern dental clinic in the heart of Da Nang with state-of-the-art equipment.',
-    procedureCategories: [
-      {
-        name: 'Implant Procedures',
-        procedures: [
-          {
-            name: 'Single Implant',
-            price: { usd: 1200, vnd: 29000000 },
-            duration: '2-3 hours'
-          },
-          {
-            name: 'Multiple Implants (3 teeth)',
-            price: { usd: 3200, vnd: 77000000 },
-            duration: '4-5 hours'
-          },
-          {
-            name: 'All-on-4 Implants',
-            price: { usd: 8500, vnd: 205000000 },
-            duration: '6-8 hours'
-          }
-        ]
-      },
-      {
-        name: 'Cosmetic Dentistry',
-        procedures: [
-          {
-            name: 'Porcelain Crown',
-            price: { usd: 500, vnd: 12000000 },
-            duration: '1-2 hours'
-          },
-          {
-            name: 'Dental Veneers (per tooth)',
-            price: { usd: 400, vnd: 9600000 },
-            duration: '1-2 hours'
-          },
-          {
-            name: 'Teeth Whitening',
-            price: { usd: 300, vnd: 7200000 },
-            duration: '1-1.5 hours'
-          }
-        ]
-      },
-      {
-        name: 'General Dentistry',
-        procedures: [
-          {
-            name: 'Tooth Filling',
-            price: { usd: 50, vnd: 1200000 },
-            duration: '30-45 mins'
-          },
-          {
-            name: 'Root Canal Treatment',
-            price: { usd: 250, vnd: 6000000 },
-            duration: '1-2 hours'
-          },
-          {
-            name: 'Deep Cleaning',
-            price: { usd: 100, vnd: 2400000 },
-            duration: '1 hour'
-          }
-        ]
-      },
-      {
-        name: 'Orthodontics',
-        procedures: [
-          {
-            name: 'Traditional Braces',
-            price: { usd: 2500, vnd: 60000000 },
-            duration: '18-24 months'
-          },
-          {
-            name: 'Clear Aligners',
-            price: { usd: 3500, vnd: 84000000 },
-            duration: '12-18 months'
-          },
-          {
-            name: 'Retainers',
-            price: { usd: 200, vnd: 4800000 },
-            duration: '30 mins'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Smile Dental Clinic',
-    thumbnail: '/images/smile/smile-1.jpg',
-    images: ['/images/smile/smile-2.jpg', '/images/smile/smile-3.jpg', '/images/smile/smile-4.jpg'],
-    description: 'Modern dental clinic in the heart of Da Nang with state-of-the-art equipment.',
-    procedureCategories: [
-      {
-        name: 'Implant Procedures',
-        procedures: [
-          { name: 'Single Implant', price: { usd: 1200, vnd: 29000000 }, duration: '2-3 hours' },
-          { name: 'Multiple Implants', price: { usd: 2200, vnd: 77000000 }, duration: '3-4 hours' }
-        ]
-      },
-      {
-        name: 'Crowns/Veneers',
-        procedures: [
-          { name: 'Porcelain Crown', price: { usd: 500, vnd: 12000000 }, duration: '1-2 hours' },
-          { name: 'Dental Veneers', price: { usd: 400, vnd: 9600000 }, duration: '1-2 hours' }
-        ]
-      }
-      // Add more categories as needed
-    ]
-  }
-  // Add more clinics here
-]
-
-const packages: Package[] = [
-  {
-    name: 'Basic',
-    price: 25,
-    features: [
-      'Dental clinic booking assistance',
-      'Support during treatment process',
-      'Online consultation'
-    ]
-  },
-  {
-    name: 'Silver',
-    price: 50,
-    features: [
-      'All Basic package features',
-      'Professional translation service',
-      'Medical document translation',
-      'In-person interpreter during treatment'
-    ]
-  },
-  {
-    name: 'Gold',
-    price: 75,
-    features: [
-      'All Silver package features',
-      'Private transportation service',
-      'Airport pickup and drop-off',
-      'Transportation to/from dental clinic'
-    ]
-  }
-]
+import { Clinic, clinics, Package, packages } from './clinic-data'
 
 const formSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
@@ -223,12 +43,6 @@ const formSchema = z.object({
     .string()
     .min(10, 'Please provide more detail about your dental problem and the procedures you want')
 })
-
-// const paymentUrls = {
-//   Basic: 'https://book.stripe.com/test_eVacNBcFgal7fUQ4gg',
-//   Silver: 'https://buy.stripe.com/test_8wM3d19t4dxj240bIJ',
-//   Gold: 'https://buy.stripe.com/test_dR68xl0Wy8cZcIE002'
-// }
 
 export default function BookingPage() {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
@@ -293,6 +107,7 @@ export default function BookingPage() {
         },
         body: JSON.stringify({
           packageName: selectedPackage.name,
+          packagePrice: selectedPackage.price,
           bookingData
         })
       })
@@ -336,7 +151,7 @@ export default function BookingPage() {
       <h1 className='text-3xl font-bold mb-8'>Book an Appointment</h1>
 
       <div className='flex gap-8'>
-        <div className='hidden md:block w-64 flex-shrink-0'>
+        <div className='hidden md:block w-64 flex-shrink-0 mb-16'>
           <div className='sticky top-8'>
             <Steps steps={steps} currentStep={currentStep} />
           </div>
