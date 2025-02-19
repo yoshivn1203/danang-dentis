@@ -5,7 +5,6 @@ import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 
 interface DateTimePicker24hProps {
@@ -37,15 +36,13 @@ export function DateTimePicker24h({
   }
 
   const handleTimeChange = (type: 'hour' | 'minute', value: string) => {
-    if (date) {
-      const newDate = new Date(date)
-      if (type === 'hour') {
-        newDate.setHours(parseInt(value))
-      } else if (type === 'minute') {
-        newDate.setMinutes(parseInt(value))
-      }
-      setDate(newDate)
+    const newDate = date ? new Date(date) : new Date()
+    if (type === 'hour') {
+      newDate.setHours(parseInt(value))
+    } else if (type === 'minute') {
+      newDate.setMinutes(parseInt(value))
     }
+    setDate(newDate)
   }
 
   return (
@@ -79,7 +76,7 @@ export function DateTimePicker24h({
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-auto p-0'>
-        <div className='sm:flex'>
+        <div className='flex flex-col'>
           <Calendar
             mode='single'
             selected={date}
@@ -87,39 +84,37 @@ export function DateTimePicker24h({
             initialFocus
             disabled={disablePastDates ? date => date < today : undefined}
           />
-          <div className='flex flex-col sm:flex-row sm:h-[300px] divide-y sm:divide-y-0 sm:divide-x'>
-            <ScrollArea className='w-64 sm:w-auto'>
-              <div className='flex sm:flex-col p-2'>
-                {hours.reverse().map(hour => (
-                  <Button
-                    key={hour}
-                    size='icon'
-                    variant={date && date.getHours() === hour ? 'default' : 'ghost'}
-                    className='sm:w-full shrink-0 aspect-square'
-                    onClick={() => handleTimeChange('hour', hour.toString())}
-                  >
-                    {hour.toString().padStart(2, '0')}
-                  </Button>
-                ))}
+          <div className='border-t p-4'>
+            <div className='flex items-center gap-4'>
+              <div className='flex items-center gap-2'>
+                <div className='text-sm text-muted-foreground'>Hour:</div>
+                <select
+                  className='w-16 rounded-md border border-input bg-background px-2 py-1 text-sm'
+                  value={date ? date.getHours() : new Date().getHours()}
+                  onChange={e => handleTimeChange('hour', e.target.value)}
+                >
+                  {hours.map(hour => (
+                    <option key={hour} value={hour}>
+                      {hour.toString().padStart(2, '0')}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <ScrollBar orientation='horizontal' className='sm:hidden' />
-            </ScrollArea>
-            <ScrollArea className='w-64 sm:w-auto'>
-              <div className='flex sm:flex-col p-2'>
-                {Array.from({ length: 12 }, (_, i) => i * 5).map(minute => (
-                  <Button
-                    key={minute}
-                    size='icon'
-                    variant={date && date.getMinutes() === minute ? 'default' : 'ghost'}
-                    className='sm:w-full shrink-0 aspect-square'
-                    onClick={() => handleTimeChange('minute', minute.toString())}
-                  >
-                    {minute.toString().padStart(2, '0')}
-                  </Button>
-                ))}
+              <div className='flex items-center gap-2'>
+                <div className='text-sm text-muted-foreground'>Minute:</div>
+                <select
+                  className='w-16 rounded-md border border-input bg-background px-2 py-1 text-sm'
+                  value={date ? date.getMinutes() : new Date().getMinutes()}
+                  onChange={e => handleTimeChange('minute', e.target.value)}
+                >
+                  {Array.from({ length: 12 }, (_, i) => i * 5).map(minute => (
+                    <option key={minute} value={minute}>
+                      {minute.toString().padStart(2, '0')}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <ScrollBar orientation='horizontal' className='sm:hidden' />
-            </ScrollArea>
+            </div>
           </div>
         </div>
       </PopoverContent>
