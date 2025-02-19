@@ -1,3 +1,14 @@
+import { StaticImageData } from 'next/image'
+
+import drBao1 from '@/assets/images/dr-bao/dr-bao-1.jpg'
+import drBao2 from '@/assets/images/dr-bao/dr-bao-2.jpg'
+import drBao3 from '@/assets/images/dr-bao/dr-bao-3.jpg'
+import drBao4 from '@/assets/images/dr-bao/dr-bao-4.png'
+import smile1 from '@/assets/images/smile/smile-1.jpg'
+import smile2 from '@/assets/images/smile/smile-2.jpg'
+import smile3 from '@/assets/images/smile/smile-3.jpg'
+import smile4 from '@/assets/images/smile/smile-4.jpg'
+
 export interface Procedure {
   name: string
   price: {
@@ -15,8 +26,8 @@ export interface ProcedureCategory {
 export interface Clinic {
   id: number
   name: string
-  thumbnail: string
-  images: string[]
+  thumbnail: StaticImageData
+  images: StaticImageData[]
   description: string
   procedureCategories: ProcedureCategory[]
 }
@@ -31,12 +42,8 @@ export const clinics: Clinic[] = [
   {
     id: 1,
     name: 'Dr.Bao Dental Clinic',
-    thumbnail: '/images/dr-bao/dr-bao-1.jpg',
-    images: [
-      '/images/dr-bao/dr-bao-2.jpg',
-      '/images/dr-bao/dr-bao-3.jpg',
-      '/images/dr-bao/dr-bao-4.png'
-    ],
+    thumbnail: drBao1,
+    images: [drBao2, drBao3, drBao4],
     description: 'Modern dental clinic in the heart of Da Nang with state-of-the-art equipment.',
     procedureCategories: [
       {
@@ -124,8 +131,8 @@ export const clinics: Clinic[] = [
   {
     id: 2,
     name: 'Smile Dental Clinic',
-    thumbnail: '/images/smile/smile-1.jpg',
-    images: ['/images/smile/smile-2.jpg', '/images/smile/smile-3.jpg', '/images/smile/smile-4.jpg'],
+    thumbnail: smile1,
+    images: [smile2, smile3, smile4],
     description: 'Modern dental clinic in the heart of Da Nang with state-of-the-art equipment.',
     procedureCategories: [
       {

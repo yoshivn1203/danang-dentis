@@ -3,17 +3,20 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import step1Image from '@/assets/images/step-1.jpg'
+import step2Image from '@/assets/images/step-2.jpg'
+import step3Image from '@/assets/images/step-3.jpg'
+import step4Image from '@/assets/images/step-4.jpg'
 import { Button } from '@/components/ui/button'
 
 export function HowItWorks() {
   return (
     <section className='bg-gray-50 dark:bg-gray-800'>
-      <div className='py-16 px-4 max-w-4xl mx-auto '>
+      <div className='py-16 px-4 max-w-4xl mx-auto'>
         <h2 className='text-3xl font-bold text-center mb-12'>How It Works</h2>
-
-        <div className='space-y-8 md:space-y-12'>
+        <div className='space-y-12'>
           {/* Step 1 */}
-          <div className='flex flex-col md:flex-row items-center gap-8'>
+          <div className='flex flex-col md:flex-row items-center justify-center gap-8'>
             <div className='w-full md:w-1/2 relative z-10 bg-background shadow-lg border p-12 rounded-lg dark:bg-gray-900'>
               <div className='mb-6'>
                 <span className='text-2xl font-bold text-rose-600  mr-2'>1</span>
@@ -28,24 +31,26 @@ export function HowItWorks() {
             </div>
             <div className='hidden md:block md:w-3/4 h-96 bg-muted rounded-lg relative -ml-16'>
               <Image
-                src='/images/step-1.jpg'
+                src={step1Image}
                 alt='Dental Clinic'
-                layout='fill'
-                objectFit='cover'
-                className='rounded-lg'
+                fill
+                className='rounded-lg object-cover'
+                placeholder='blur'
+                sizes='(max-width: 768px) 100vw, 50vw'
               />
             </div>
           </div>
 
           {/* Step 2 */}
-          <div className='flex flex-col md:flex-row items-center gap-8'>
+          <div className='flex flex-col md:flex-row items-center justify-center gap-8'>
             <div className='hidden md:block md:w-3/4 h-96 bg-muted rounded-lg relative'>
               <Image
-                src='/images/step-2.jpg'
+                src={step2Image}
                 alt='Dental Clinic'
-                layout='fill'
-                objectFit='cover'
-                className='rounded-lg'
+                fill
+                className='rounded-lg object-cover'
+                placeholder='blur'
+                sizes='(max-width: 768px) 100vw, 50vw'
               />
             </div>
             <div className='w-full md:w-1/2 relative z-10 bg-background shadow-lg border p-12 rounded-lg md:-ml-16 dark:bg-gray-900'>
@@ -63,7 +68,7 @@ export function HowItWorks() {
           </div>
 
           {/* Step 3 */}
-          <div className='flex flex-col md:flex-row items-center gap-8'>
+          <div className='flex flex-col md:flex-row items-center justify-center gap-8'>
             <div className='w-full md:w-1/2 relative z-10 bg-background shadow-lg border p-12 rounded-lg dark:bg-gray-900'>
               <div className='mb-6'>
                 <span className='text-2xl font-bold text-rose-600 mr-2'>3</span>
@@ -78,24 +83,26 @@ export function HowItWorks() {
             </div>
             <div className='hidden md:block md:w-3/4 h-96 bg-muted rounded-lg relative -ml-16'>
               <Image
-                src='/images/step-3.jpg'
+                src={step3Image}
                 alt='Dental Clinic'
-                layout='fill'
-                objectFit='cover'
-                className='rounded-lg'
+                fill
+                className='rounded-lg object-cover'
+                placeholder='blur'
+                sizes='(max-width: 768px) 100vw, 50vw'
               />
             </div>
           </div>
 
           {/* Step 4 */}
-          <div className='flex flex-col md:flex-row items-center gap-8'>
+          <div className='flex flex-col md:flex-row items-center justify-center gap-8'>
             <div className='hidden md:block md:w-3/4 h-96 bg-muted rounded-lg relative'>
               <Image
-                src='/images/step-4.jpg'
+                src={step4Image}
                 alt='Dental Clinic'
-                layout='fill'
-                objectFit='cover'
-                className='rounded-lg'
+                fill
+                className='rounded-lg object-cover'
+                placeholder='blur'
+                sizes='(max-width: 768px) 100vw, 50vw'
               />
             </div>
             <div className='w-full md:w-1/2 relative z-10 bg-background shadow-lg border p-12 rounded-lg md:-ml-16 dark:bg-gray-900'>

@@ -1,12 +1,24 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 
+import heroImage from '@/assets/images/hero.jpg'
 import { Button } from '@/components/ui/button'
 
 export function Banner() {
   return (
-    <section className='relative bg-[url(/images/hero.jpg)] bg-cover bg-center bg-no-repeat'>
+    <section className='relative'>
+      <div className='absolute inset-0'>
+        <Image
+          src={heroImage}
+          alt='Dental clinic hero image'
+          fill
+          className='object-cover'
+          priority
+          placeholder='blur'
+        />
+      </div>
       <div
         className={
           'absolute inset-0 bg-background/75 bg-transparent bg-gradient-to-r from-white/95 sm:to-white/25 dark:from-black/95 dark:to-black/25 '
