@@ -495,7 +495,10 @@ export default function BookingPage() {
             <Card>
               <CardHeader>
                 <CardTitle>4. Select Package & Payment</CardTitle>
-                <CardDescription>Choose your service package and complete payment</CardDescription>
+                <CardDescription>
+                  Choose your service package and complete payment. Package prices do not include
+                  dental procedure costs.
+                </CardDescription>
               </CardHeader>
               <CardContent className='space-y-6'>
                 <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
