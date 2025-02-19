@@ -52,7 +52,14 @@ export default function SuccessPage() {
 
   const handleDownloadPDF = async () => {
     if (receiptRef.current) {
-      // Dynamically import html2pdf only when needed
+      // Store references to elements we want to hide
+      const successMessage = receiptRef.current.querySelector('#success-message')
+      const buttons = receiptRef.current.querySelector('#action-buttons')
+
+      // Temporarily hide elements
+      if (successMessage) successMessage.classList.add('hidden')
+      if (buttons) buttons.classList.add('hidden')
+
       const html2pdf = (await import('html2pdf.js')).default as any
 
       const opt = {
@@ -62,7 +69,14 @@ export default function SuccessPage() {
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
       }
-      html2pdf().set(opt).from(receiptRef.current).save()
+
+      try {
+        await html2pdf().set(opt).from(receiptRef.current).save()
+      } finally {
+        // Restore visibility
+        if (successMessage) successMessage.classList.remove('hidden')
+        if (buttons) buttons.classList.remove('hidden')
+      }
     }
   }
 
@@ -104,7 +118,7 @@ export default function SuccessPage() {
       <Card className='print:shadow-none' ref={receiptRef}>
         <CardHeader className='space-y-1'>
           <CardTitle className='text-2xl'>Booking Confirmation</CardTitle>
-          <div className='text-green-600 flex items-center gap-2'>
+          <div id='success-message' className='text-green-600 flex items-center gap-2'>
             <CheckCircle className='h-5 w-5' />
             <span>Payment Successful</span>
           </div>
@@ -149,7 +163,7 @@ export default function SuccessPage() {
             <p className='font-medium text-sm font-mono break-all'>{orderDetails.paymentId}</p>
           </div>
 
-          <div className='flex flex-col sm:flex-row gap-4 mt-6 print:hidden'>
+          <div id='action-buttons' className='flex flex-col sm:flex-row gap-4 mt-6 print:hidden'>
             <Button variant='outline' className='shrink-0' onClick={handlePrint}>
               <Printer className='mr-2 h-4 w-4 shrink-0' />
               <span className='truncate'>Print Receipt</span>
