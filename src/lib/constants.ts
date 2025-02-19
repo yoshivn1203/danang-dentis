@@ -13,7 +13,7 @@ export const AIRTABLE_BASE_ID = 'appOv6GiSHGRpmTYJ'
 export const AIRTABLE_TABLE_NAME = 'root'
 
 export const STRIPE_WEBHOOK_SECRET = 'whsec_6iA9HQW13Xmy9EELfSBIugJr4XRE5dWu'
-export const BASE_FE_URL = 'https://danang-dentis.vercel.app'
+export const BASE_FE_URL = 'https://danangdentalcare.com/'
 
 //local development variable
 // export const STRIPE_WEBHOOK_SECRET =

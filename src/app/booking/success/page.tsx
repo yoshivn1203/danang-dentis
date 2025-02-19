@@ -99,7 +99,8 @@ export default function SuccessPage() {
       <div className='text-center space-y-2'>
         <h1 className='text-3xl font-bold'>Thank You for Your Booking!</h1>
         <p className='text-muted-foreground'>
-          Please download or print this receipt for your records.
+          Please download or print this receipt for your records. We will contact you within 1-2
+          days with more details.
         </p>
       </div>
 

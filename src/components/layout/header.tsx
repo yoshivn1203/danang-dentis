@@ -101,8 +101,8 @@ export function Header() {
                 >
                   {isDark ? <Sun className='h-5 w-5' /> : <Moon className='h-5 w-5' />}
                 </Button>
-                <div className='bg-foreground text-background py-2 px-4 absolute top-[51px] right-0 z-10 w-[373px]'>
-                  Prefer to talk? Call us to order{' '}
+                <div className='bg-foreground text-background py-2 px-4 absolute top-[51px] right-0 z-10 w-[412px]'>
+                  Prefer to talk? Call or WhatsApp us{' '}
                   <span className='font-semibold underline'>+84-818-548-409</span>
                 </div>
               </div>
@@ -128,7 +128,7 @@ export function Header() {
               </Button>
             </Link>
             <div className='py-1 ml-3 text-sm'>
-              Prefer to talk? Call us to order{' '}
+              Prefer to talk? Call or WhatsApp us{' '}
               <span className='font-semibold underline'>+84-818-548-409</span>
             </div>
 
