@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { format } from 'date-fns'
 import { Check } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -34,11 +35,14 @@ import { Clinic, clinics, Package, packages } from './clinic-data'
 const formSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
+  phoneNumber: z.string().min(10, 'Please enter a valid phone number'),
   age: z.string().min(1, 'Age is required'),
   nationality: z.string().min(2, 'Nationality is required'),
   appointmentDateTime: z.date({
     required_error: 'Please select appointment date and time'
   }),
+  alternateDateTime1: z.date().optional(),
+  alternateDateTime2: z.date().optional(),
   dentalProblem: z
     .string()
     .min(10, 'Please provide more detail about your dental problem and the procedures you want')
@@ -74,9 +78,12 @@ export default function BookingPage() {
     defaultValues: {
       fullName: '',
       email: '',
+      phoneNumber: '',
       age: '',
       nationality: '',
       appointmentDateTime: undefined,
+      alternateDateTime1: undefined,
+      alternateDateTime2: undefined,
       dentalProblem: ''
     }
   })
@@ -86,14 +93,25 @@ export default function BookingPage() {
 
     setIsSubmitting(true)
 
+    const formatDateTime = (date: Date | undefined) => {
+      return date ? format(new Date(date), 'MMM d, yyyy - HH:mm') : 'Not available'
+    }
+
+    const formattedDateAppointment = formatDateTime(values.appointmentDateTime)
+    const formattedDateAlternate1 = formatDateTime(values.alternateDateTime1)
+    const formattedDateAlternate2 = formatDateTime(values.alternateDateTime2)
+
     try {
       // Create booking data object
       const bookingData = {
         customerName: values.fullName,
         email: values.email,
+        phoneNumber: values.phoneNumber,
         age: values.age,
         nationality: values.nationality,
-        appointmentTime: values.appointmentDateTime.toISOString(),
+        appointmentTime: formattedDateAppointment,
+        alternateTime1: formattedDateAlternate1,
+        alternateTime2: formattedDateAlternate2,
         description: values.dentalProblem,
         clinicName: selectedClinic.name,
         package: selectedPackage.name
@@ -323,6 +341,24 @@ export default function BookingPage() {
                             </FormItem>
                           )}
                         />
+
+                        <FormField
+                          control={form.control}
+                          name='phoneNumber'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Phone Number</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type='tel'
+                                  placeholder='Enter your phone number'
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
 
                       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
@@ -371,6 +407,40 @@ export default function BookingPage() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Appointment Date and Time</FormLabel>
+                            <FormControl>
+                              <DateTimePicker24h
+                                date={field.value}
+                                setDate={date => field.onChange(date)}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name='alternateDateTime1'
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Alternative Date and Time (Optional)</FormLabel>
+                            <FormControl>
+                              <DateTimePicker24h
+                                date={field.value}
+                                setDate={date => field.onChange(date)}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name='alternateDateTime2'
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Second Alternative Date and Time (Optional)</FormLabel>
                             <FormControl>
                               <DateTimePicker24h
                                 date={field.value}

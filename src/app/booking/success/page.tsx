@@ -1,6 +1,5 @@
 'use client'
 
-import { format } from 'date-fns'
 import { CheckCircle, Download, Loader2, Printer } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -15,6 +14,8 @@ interface OrderDetails {
   package: string
   clinicName: string
   paymentId: string
+  alternateTime1?: string
+  alternateTime2?: string
   // Add other fields you want to display
 }
 
@@ -90,10 +91,6 @@ export default function SuccessPage() {
     )
   }
 
-  const formattedDate = orderDetails.appointmentTime
-    ? format(new Date(orderDetails.appointmentTime), 'EEEE, MMMM d, yyyy - h:mm a')
-    : 'Not available'
-
   return (
     <div className='max-w-2xl mx-auto p-6 mt-16 mb-16 space-y-6'>
       <div className='text-center space-y-2'>
@@ -134,7 +131,17 @@ export default function SuccessPage() {
 
           <div className='space-y-2'>
             <p className='text-sm text-muted-foreground'>Appointment Time</p>
-            <p className='font-medium'>{formattedDate}</p>
+            <p className='font-medium'>{orderDetails.appointmentTime}</p>
+          </div>
+
+          <div className='space-y-2'>
+            <p className='text-sm text-muted-foreground'>Alternative Appointment Time</p>
+            <p className='font-medium'>{orderDetails.alternateTime1}</p>
+          </div>
+
+          <div className='space-y-2'>
+            <p className='text-sm text-muted-foreground'>Second Alternative Appointment Time</p>
+            <p className='font-medium'>{orderDetails.alternateTime2}</p>
           </div>
 
           <div className='space-y-2'>

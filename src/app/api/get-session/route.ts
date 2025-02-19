@@ -29,7 +29,9 @@ export async function GET(req: Request) {
       email: metadata.email,
       package: metadata.package,
       appointmentTime: metadata.appointmentTime,
-      clinicName: metadata.clinicName
+      clinicName: metadata.clinicName,
+      alternateTime1: metadata.alternateTime1,
+      alternateTime2: metadata.alternateTime2
       // Add other fields as needed
     })
   } catch (error) {

@@ -59,9 +59,12 @@ export async function POST(req: Request) {
       const requestData = {
         'Customer Name': metadata.customerName,
         Email: metadata.email,
+        'Phone Number': metadata.phoneNumber,
         Age: metadata.age,
         Nationality: metadata.nationality,
         'Appointment Time': metadata.appointmentTime,
+        'Alternative Time 1': metadata.alternateTime1 || '',
+        'Alternative Time 2': metadata.alternateTime2 || '',
         Description: metadata.description,
         Package: metadata.package,
         'Clinic Name': metadata.clinicName,
