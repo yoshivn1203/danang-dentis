@@ -93,7 +93,7 @@ export function DateTimePicker24h({
               <div className='flex items-center gap-2'>
                 <div className='text-sm text-muted-foreground'>Hour:</div>
                 <select
-                  className='w-16 rounded-md border border-input bg-background px-2 py-1 text-sm [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300'
+                  className='w-14 rounded-md border border-input bg-background px-2 py-1 text-sm [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300'
                   value={date ? date.getHours() : 0}
                   onChange={e => handleTimeChange('hour', e.target.value)}
                 >
@@ -107,7 +107,7 @@ export function DateTimePicker24h({
               <div className='flex items-center gap-2'>
                 <div className='text-sm text-muted-foreground'>Minute:</div>
                 <select
-                  className='w-16 rounded-md border border-input bg-background px-2 py-1 text-sm'
+                  className='w-14 rounded-md border border-input bg-background px-2 py-1 text-sm'
                   value={date ? date.getMinutes() : 0}
                   onChange={e => handleTimeChange('minute', e.target.value)}
                 >
