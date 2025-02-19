@@ -35,7 +35,11 @@ import { Clinic, clinics, Package, packages } from './clinic-data'
 const formSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
-  phoneNumber: z.string().min(10, 'Please enter a valid phone number'),
+  phoneNumber: z
+    .string()
+    .min(10, 'Phone number must be at least 10 digits')
+    .max(15, 'Phone number must not exceed 15 digits')
+    .regex(/^\+?[0-9]+$/, 'Please enter a valid phone number'),
   age: z.string().min(1, 'Age is required'),
   nationality: z.string().min(2, 'Nationality is required'),
   appointmentDateTime: z.date({
@@ -353,15 +357,20 @@ export default function BookingPage() {
                                   type='tel'
                                   placeholder='Enter your phone number'
                                   {...field}
+                                  onChange={e => {
+                                    const value = e.target.value
+                                    // Allow only numbers and plus sign at the beginning
+                                    if (value === '' || /^\+?\d*$/.test(value)) {
+                                      field.onChange(value)
+                                    }
+                                  }}
                                 />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-                      </div>
 
-                      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <FormField
                           control={form.control}
                           name='age'
@@ -381,7 +390,6 @@ export default function BookingPage() {
                             </FormItem>
                           )}
                         />
-
                         <FormField
                           control={form.control}
                           name='nationality'
@@ -401,56 +409,61 @@ export default function BookingPage() {
                     {/* Appointment Details Section */}
                     <div className='space-y-4'>
                       <h3 className='font-semibold'>Appointment Details</h3>
-                      <FormField
-                        control={form.control}
-                        name='appointmentDateTime'
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Appointment Date and Time</FormLabel>
-                            <FormControl>
-                              <DateTimePicker24h
-                                date={field.value}
-                                setDate={date => field.onChange(date)}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <FormField
+                          control={form.control}
+                          name='appointmentDateTime'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Appointment Time</FormLabel>
+                              <FormControl>
+                                <DateTimePicker24h
+                                  date={field.value}
+                                  setDate={date => field.onChange(date)}
+                                  disablePastDates
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-                      <FormField
-                        control={form.control}
-                        name='alternateDateTime1'
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Alternative Date and Time (Optional)</FormLabel>
-                            <FormControl>
-                              <DateTimePicker24h
-                                date={field.value}
-                                setDate={date => field.onChange(date)}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                        <FormField
+                          control={form.control}
+                          name='alternateDateTime1'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Alternative Time (Optional)</FormLabel>
+                              <FormControl>
+                                <DateTimePicker24h
+                                  date={field.value}
+                                  setDate={date => field.onChange(date)}
+                                  disablePastDates
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-                      <FormField
-                        control={form.control}
-                        name='alternateDateTime2'
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Second Alternative Date and Time (Optional)</FormLabel>
-                            <FormControl>
-                              <DateTimePicker24h
-                                date={field.value}
-                                setDate={date => field.onChange(date)}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                        <FormField
+                          control={form.control}
+                          name='alternateDateTime2'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Second Alternative Time (Optional)</FormLabel>
+                              <FormControl>
+                                <DateTimePicker24h
+                                  date={field.value}
+                                  setDate={date => field.onChange(date)}
+                                  disablePastDates
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
 
                       <FormField
                         control={form.control}
@@ -465,6 +478,7 @@ export default function BookingPage() {
                                 placeholder='Please describe your dental concerns'
                                 className='resize-none'
                                 {...field}
+                                rows={4}
                               />
                             </FormControl>
                             <FormMessage />
@@ -486,7 +500,7 @@ export default function BookingPage() {
                 <CardDescription>Choose your service package and complete payment</CardDescription>
               </CardHeader>
               <CardContent className='space-y-6'>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
                   {packages.map((pkg, index) => (
                     <Card
                       key={index}
@@ -519,7 +533,7 @@ export default function BookingPage() {
                   <Button
                     onClick={form.handleSubmit(onSubmit)}
                     disabled={isSubmitting}
-                    className='w-64 h-12 mt-8 text-lg bg-gradient-to-r from-amber-300 to-yellow-400 hover:from-amber-400 hover:to-yellow-500 text-white shadow-md'
+                    className='w-64 h-12 mt-8 text-lg bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white shadow-md'
                   >
                     {isSubmitting ? 'Processing...' : 'Continue To Payment'}
                   </Button>

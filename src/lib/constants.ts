@@ -6,10 +6,10 @@ export const AIRTABLE_TOKEN =
 export const AIRTABLE_BASE_ID = 'appOv6GiSHGRpmTYJ'
 export const AIRTABLE_TABLE_NAME = 'root'
 
-// export const STRIPE_WEBHOOK_SECRET = 'whsec_6iA9HQW13Xmy9EELfSBIugJr4XRE5dWu'
-// export const BASE_FE_URL = 'https://danangdentalcare.com/'
+export const STRIPE_WEBHOOK_SECRET = 'whsec_6iA9HQW13Xmy9EELfSBIugJr4XRE5dWu'
+export const BASE_FE_URL = 'https://danangdentalcare.com/'
 
 //local development variable
-export const STRIPE_WEBHOOK_SECRET =
-  'whsec_b065583a40d7d94b55c399b937d8cf77b6f0aca724eee810730bb467ebfbf2d7'
-export const BASE_FE_URL = 'http://localhost:3000'
+// export const STRIPE_WEBHOOK_SECRET =
+//   'whsec_b065583a40d7d94b55c399b937d8cf77b6f0aca724eee810730bb467ebfbf2d7'
+// export const BASE_FE_URL = 'http://localhost:3000'

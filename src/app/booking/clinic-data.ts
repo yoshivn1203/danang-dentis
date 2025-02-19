@@ -153,29 +153,28 @@ export const packages: Package[] = [
     name: 'Basic',
     price: 19,
     features: [
-      'Dental clinic booking assistance',
-      'Support during treatment process',
-      'Online consultation'
+      'Assistance with dental clinic bookings',
+      'Online support via WhatsApp, Viber, and Facebook'
     ]
   },
   {
     name: 'Silver',
     price: 39,
     features: [
-      'All Basic package features',
-      'Professional translation service',
+      'Includes all features of the Basic package',
+      'Professional translation services',
       'Medical document translation',
-      'In-person interpreter during treatment'
+      'On-site interpreter during treatment (2-3 hours)'
     ]
   },
   {
     name: 'Gold',
     price: 99,
     features: [
-      'All Silver package features',
-      'Private transportation service',
-      'Airport pickup and drop-off',
-      'Transportation to/from dental clinic'
+      'Includes all features of the Silver package',
+      'Extended on-site interpreter service during treatment (4-5 hours)',
+      'Airport pickup and drop-off (up to 30 km)',
+      'Transportation to and from the dental clinic (up to 30 km)'
     ]
   }
 ]
