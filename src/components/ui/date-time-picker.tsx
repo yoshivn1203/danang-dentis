@@ -37,6 +37,10 @@ export function DateTimePicker24h({
 
   const handleTimeChange = (type: 'hour' | 'minute', value: string) => {
     const newDate = date ? new Date(date) : new Date()
+    if (!date) {
+      newDate.setHours(0)
+      newDate.setMinutes(0)
+    }
     if (type === 'hour') {
       newDate.setHours(parseInt(value))
     } else if (type === 'minute') {
@@ -89,8 +93,8 @@ export function DateTimePicker24h({
               <div className='flex items-center gap-2'>
                 <div className='text-sm text-muted-foreground'>Hour:</div>
                 <select
-                  className='w-16 rounded-md border border-input bg-background px-2 py-1 text-sm'
-                  value={date ? date.getHours() : new Date().getHours()}
+                  className='w-16 rounded-md border border-input bg-background px-2 py-1 text-sm [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300'
+                  value={date ? date.getHours() : 0}
                   onChange={e => handleTimeChange('hour', e.target.value)}
                 >
                   {hours.map(hour => (
@@ -104,7 +108,7 @@ export function DateTimePicker24h({
                 <div className='text-sm text-muted-foreground'>Minute:</div>
                 <select
                   className='w-16 rounded-md border border-input bg-background px-2 py-1 text-sm'
-                  value={date ? date.getMinutes() : new Date().getMinutes()}
+                  value={date ? date.getMinutes() : 0}
                   onChange={e => handleTimeChange('minute', e.target.value)}
                 >
                   {Array.from({ length: 12 }, (_, i) => i * 5).map(minute => (
