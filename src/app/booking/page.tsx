@@ -518,7 +518,7 @@ export default function BookingPage() {
                           </div>
                         </div>
                       )}
-                      <CardHeader className='text-center pb-4 pt-6 bg-gradient-to-b from-rose-50'>
+                      <CardHeader className='text-center pb-4 pt-6 bg-gradient-to-b from-rose-50 dark:from-rose-950/50'>
                         <CardTitle className='text-xl'>{pkg.name}</CardTitle>
                         <CardDescription className='text-2xl font-bold text-rose-600 mt-2'>
                           ${pkg.price} USD
@@ -529,7 +529,7 @@ export default function BookingPage() {
                           {pkg.features.map((feature, i) => (
                             <li key={i} className='flex items-start'>
                               <Check className='h-5 w-5 mr-2 mt-0.5 text-rose-500 shrink-0' />
-                              <span className='text-sm text-gray-600'>{feature}</span>
+                              <span className='text-sm'>{feature}</span>
                             </li>
                           ))}
                         </ul>
