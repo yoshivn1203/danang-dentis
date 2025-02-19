@@ -8,14 +8,14 @@ export default function About() {
     <div className='container mx-auto pt-16 pb-12 px-4'>
       {/* Hero Section */}
       <div className='text-center mb-16'>
-        <h1 className='text-4xl font-bold mb-6'>About Danang Dentists</h1>
+        <h1 className='text-4xl font-bold mb-6'>About Danang Dental Care</h1>
       </div>
 
       {/* Main Content */}
       <div className='max-w-3xl mx-auto mb-16'>
         <div className='space-y-6'>
           <p className='text-muted-foreground'>
-            At Danang Dentists, we understand that seeking dental care abroad can be daunting.
+            At Danang Dental Care, we understand that seeking dental care abroad can be daunting.
             That's why we've built partnerships with Da Nang's leading dental clinics to provide
             international patients with high-quality dental services at significantly lower costs.
           </p>

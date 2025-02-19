@@ -62,7 +62,7 @@ export function Header() {
             {/* Logo */}
             <div className='flex-1 flex items-center justify-center md:justify-start'>
               <Link href='/' className='text-xl font-bold'>
-                DANANG DENTISTS
+                DN DENTCARE
               </Link>
             </div>
 

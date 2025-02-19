@@ -9,7 +9,7 @@ export default function LegalPage() {
           <section className='space-y-4'>
             <h2 className='text-2xl font-semibold'>Service Disclaimer</h2>
             <p className='text-muted-foreground'>
-              Danang Dentists operates as a connection service that facilitates relationships
+              Danang Dental Care operates as a connection service that facilitates relationships
               between international patients and dental clinics in Da Nang, Vietnam. We provide
               support services including but not limited to translation, transportation, and
               appointment scheduling.

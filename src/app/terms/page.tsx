@@ -9,7 +9,7 @@ export default function TermsPage() {
           <section className='space-y-4'>
             <h2 className='text-2xl font-semibold'>1. Service Overview</h2>
             <p className='text-muted-foreground'>
-              Danang Dentists provides a connection service between international patients and
+              Danang Dental Care provides a connection service between international patients and
               dental clinics in Da Nang, Vietnam. Our services include:
             </p>
             <ul className='list-disc pl-6 text-muted-foreground space-y-2'>

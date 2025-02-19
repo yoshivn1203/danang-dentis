@@ -29,7 +29,7 @@ export function Footer() {
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
           {/* Brand Section */}
           <div>
-            <div className='text-xl font-bold'>DANANG DENTISTS</div>
+            <div className='text-xl font-bold'>DN DENTCARE</div>
             <p className='mt-4 max-w-xs text-muted-foreground'>
               Premium dental care in Da Nang, Vietnam. International standards at affordable prices.
             </p>
@@ -100,7 +100,7 @@ export function Footer() {
 
         <div className='mt-12 border-t pt-4'>
           <div className='text-center text-sm text-muted-foreground'>
-            <p>© 2024 Danang Dentists. All rights reserved.</p>
+            <p>© 2024 Danang Dental Care. All rights reserved.</p>
           </div>
         </div>
       </div>
