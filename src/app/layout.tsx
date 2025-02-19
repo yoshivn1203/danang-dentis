@@ -43,6 +43,13 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
         dark: isDark
       })}
     >
+      <meta property='og:title' content='Danang Dental Care' />
+      <meta
+        property='og:description'
+        content='Danang Dental Care connects international patients with dental clinics in Da Nang, Vietnam.'
+      />
+      <meta property='og:image' content='url_to_image' />
+      <meta property='og:url' content='your_site_url' />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
         <Header />
         <Suspense fallback={<LoadingSpinner />}>
