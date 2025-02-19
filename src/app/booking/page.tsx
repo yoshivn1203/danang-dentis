@@ -187,7 +187,7 @@ export default function BookingPage() {
               <CardDescription>Choose a dental clinic for your appointment</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {clinics.map(clinic => (
                   <div
                     key={clinic.id}
@@ -211,13 +211,13 @@ export default function BookingPage() {
                       />
                       {selectedClinic?.id === clinic.id && (
                         <div className='absolute top-0 right-0'>
-                          <div className='bg-rose-500 text-white px-3 py-1 rounded-bl'>
+                          <div className='bg-rose-500 text-white px-2 py-0.5 text-sm rounded-bl'>
                             Selected
                           </div>
                         </div>
                       )}
                     </div>
-                    <h3 className='mt-2 font-semibold'>{clinic.name}</h3>
+                    <h3 className='mt-2 font-semibold text-sm sm:text-base'>{clinic.name}</h3>
                   </div>
                 ))}
               </div>
