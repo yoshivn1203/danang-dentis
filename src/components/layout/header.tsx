@@ -1,11 +1,13 @@
 'use client'
 
 import { Moon, Sun } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import logoImage from '@/assets/images/logo.png'
 import { Button } from '@/components/ui/button'
 import { RootState } from '@/store/store'
 import { toggleTheme } from '@/store/ui/themeSlice'
@@ -61,8 +63,14 @@ export function Header() {
 
             {/* Logo */}
             <div className='flex-1 flex items-center justify-center md:justify-start'>
-              <Link href='/' className='text-xl font-bold'>
-                DN DENTCARE
+              <Link href='/' className='flex items-center justify-center w-full md:justify-start'>
+                <Image
+                  src={logoImage}
+                  alt='DN DENTCARE Logo'
+                  height={140}
+                  width={140}
+                  className='object-contain'
+                />
               </Link>
             </div>
 
