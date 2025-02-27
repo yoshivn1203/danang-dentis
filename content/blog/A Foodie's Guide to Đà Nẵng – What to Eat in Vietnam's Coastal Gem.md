@@ -6,8 +6,8 @@ category: food
 thumbnail: /images/uploads/trai-nghiem-dem-tai-da-nang-1-1.jpg
 rating: 5
 reading_time: 10
-description: From fresh seafood to local specialties, Đà Nẵng offers a
-  gastronomic experience that will delight any food lover
+description: "From fresh seafood to local specialties, Đà Nẵng offers a
+  gastronomic experience that will delight any food lover\r"
 ---
 ## 🏝 Introduction
 
@@ -39,5 +39,7 @@ Mì Quảng is a signature dish of **Central Vietnam**, featuring:
 - 🥒 **Served with fresh vegetables**
 
 
-[https://www.youtube.com/watch?v=LCMn2JbY1GQ](https://www.youtube.com/watch?v=LCMn2JbY1GQ)
 
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-JmruxG8VCw?si=tFL58SLnmDwqGTfg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

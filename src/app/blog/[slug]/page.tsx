@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw' // ✅ Allow raw HTML
 import remarkGfm from 'remark-gfm'
 
 import { getPostBySlug } from '../actions'
@@ -20,7 +21,19 @@ export default async function BlogPost({ params }: { params: { slug: string } })
             className='w-full h-[240px] sm:h-[480px] object-cover rounded-lg mb-8'
           />
         )}
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
+          components={{
+            iframe: ({ ...props }) => (
+              <div className='relative w-full aspect-video'>
+                <iframe {...props} className='absolute inset-0 w-full h-full' />
+              </div>
+            )
+          }}
+        >
+          {post.content}
+        </ReactMarkdown>
       </div>
     </article>
   )

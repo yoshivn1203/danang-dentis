@@ -33,6 +33,7 @@ export default function BlogPage() {
               variant={activeCategory === category ? 'default' : 'outline'}
               onClick={() => setActiveCategory(category)}
               size='sm'
+              className='capitalize font-bold'
             >
               {category}
             </Button>
