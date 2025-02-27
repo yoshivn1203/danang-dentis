@@ -1,3 +1,4 @@
+import typography from '@tailwindcss/typography'
 import type { Config } from 'tailwindcss'
 import animate from 'tailwindcss-animate'
 
@@ -56,8 +57,18 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            'code::before': { content: '' },
+            'code::after': { content: '' },
+            'blockquote p:first-of-type::before': { content: '' },
+            'blockquote p:last-of-type::after': { content: '' }
+          }
+        }
       }
     }
   },
-  plugins: [animate]
+  plugins: [animate, typography]
 } satisfies Config
