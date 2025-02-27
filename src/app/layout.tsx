@@ -50,10 +50,12 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
       />
       <meta property='og:image' content='url_to_image' />
       <meta property='og:url' content='your_site_url' />
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background min-h-screen flex flex-col`}
+      >
         <Header />
         <Suspense fallback={<LoadingSpinner />}>
-          <main className='mx-auto flex-1'>{children}</main>
+          <main className='mx-auto flex-1 w-full'>{children}</main>
         </Suspense>
         <Footer />
       </body>

@@ -1,8 +1,15 @@
 ---
-title: "Top Places to Visit in Đà Nẵng – A Traveler's Paradise"
+layout: blog
+title: Top Places to Visit in Đà Nẵng – A Traveler's Paradise
 date: 2025-02-27T14:42:49
 category: places
-description: "Đà Nẵng is one of Vietnam's most dynamic cities, offering a perfect mix of natural beauty, cultural heritage, and modern attractions. Whether you're an adventure seeker, a history enthusiast, or a beach lover, Đà Nẵng has something for everyone."
+rating: 5
+reading_time: 10
+thumbnail: /images/uploads/nhung-khu-cho-noi-tieng-tai-da-nang-khong-the-bo-qua-scaled.jpg
+description: Đà Nẵng is one of Vietnam's most dynamic cities, offering a perfect
+  mix of natural beauty, cultural heritage, and modern attractions. Whether
+  you're an adventure seeker, a history enthusiast, or a beach lover, Đà Nẵng
+  has something for everyone.
 ---
 
 ## 🏝 Introduction  

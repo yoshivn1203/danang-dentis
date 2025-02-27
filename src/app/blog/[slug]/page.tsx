@@ -7,7 +7,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
   const post = await getPostBySlug(params.slug)
 
   return (
-    <article className='container mx-auto px-4 py-8'>
+    <article className='container mx-auto p-6 sm:mt-12'>
       <div className='prose prose-lg dark:prose-invert max-w-none'>
         <h1 className='text-4xl font-bold mb-4'>{post.title}</h1>
         <div className='mb-8'>
@@ -17,7 +17,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           <img
             src={post.thumbnail}
             alt={post.title}
-            className='w-full h-[400px] object-cover rounded-lg mb-8'
+            className='w-full h-[240px] sm:h-[480px] object-cover rounded-lg mb-8'
           />
         )}
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
