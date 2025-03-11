@@ -9,6 +9,7 @@ import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { useSelector } from 'react-redux'
 
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
 import { RootState, store } from '@/store/store'
@@ -53,6 +54,7 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background min-h-screen flex flex-col`}
       >
+        <GoogleAnalytics GA_MEASUREMENT_ID='G-0FC2VFHBGG' />
         <Header />
         <Suspense fallback={<LoadingSpinner />}>
           <main className='mx-auto flex-1 w-full'>{children}</main>
