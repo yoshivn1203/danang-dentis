@@ -4,8 +4,10 @@ import remarkGfm from 'remark-gfm'
 
 import { getPostBySlug } from '../actions'
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug)
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params
+  const { slug } = resolvedParams
+  const post = await getPostBySlug(slug)
 
   return (
     <article className='container mx-auto p-6 sm:mt-12'>
