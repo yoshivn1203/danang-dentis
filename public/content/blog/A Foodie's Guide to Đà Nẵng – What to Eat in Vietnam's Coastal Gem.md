@@ -3,7 +3,7 @@ layout: blog
 title: A Foodie's Guide to Đà Nẵng – What to Eat in Vietnam's Coastal Gem
 date: 2025-02-27T14:42:35
 category: food
-thumbnail: /images/uploads/trai-nghiem-dem-tai-da-nang-1-1.jpg
+thumbnail: /content/blog/images/trai-nghiem-dem-tai-da-nang-1-1.jpg
 rating: 5
 reading_time: 10
 description: "From fresh seafood to local specialties, Đà Nẵng offers a

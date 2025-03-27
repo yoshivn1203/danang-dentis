@@ -6,7 +6,7 @@ import path from 'node:path'
 import matter from 'gray-matter'
 
 declare const process: { cwd(): string }
-const postsDirectory = path.join(process.cwd(), 'content/blog')
+const postsDirectory = path.join(process.cwd(), 'public/content/blog')
 
 export interface Post {
   slug: string
@@ -22,17 +22,19 @@ export interface Post {
 
 export async function getPosts(): Promise<Post[]> {
   const fileNames = fs.readdirSync(postsDirectory)
-  const posts = fileNames.map(fileName => {
-    const slug = fileName.replace(/\.md$/, '')
-    const fullPath = path.join(postsDirectory, fileName)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { data } = matter(fileContents)
+  const posts = fileNames
+    .filter(fileName => fileName.endsWith('.md')) // Only process markdown files
+    .map(fileName => {
+      const slug = fileName.replace(/\.md$/, '')
+      const fullPath = path.join(postsDirectory, fileName)
+      const fileContents = fs.readFileSync(fullPath, 'utf8')
+      const { data } = matter(fileContents)
 
-    return {
-      slug,
-      ...(data as Omit<Post, 'slug'>)
-    }
-  })
+      return {
+        slug,
+        ...(data as Omit<Post, 'slug'>)
+      }
+    })
 
   return posts.sort((a, b) => (a.date > b.date ? -1 : 1))
 }

@@ -17,16 +17,18 @@
               proxy_url: "http://localhost:8081/api/v1",
               branch: "main",
             },
-            media_folder: "public/images/uploads",
+            //This is the physical path where your uploaded files will be stored in your project directory
+            media_folder: "public/content/blog/images",
             media_library: {
               max_file_size: 10485760 // 10MB in bytes
             },
-            public_folder: "/images/uploads",
+            //It determines how the images will be referenced in your markdown files
+            public_folder: "/content/blog/images",
             collections: [
               {
                 name: "places-blog",
                 label: "Places",
-                folder: "content/blog",
+                folder: "public/content/blog",
                 create: true,
                 format: "frontmatter",
                 extension: "md",
@@ -46,7 +48,7 @@
               {
                 name: "food-blog",
                 label: "Food",
-                folder: "content/blog",
+                folder: "public/content/blog",
                 create: true,
                 format: "frontmatter",
                 extension: "md",
